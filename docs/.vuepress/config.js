@@ -23,8 +23,9 @@ module.exports = {
           title: 'javascript基础',
           collapsable: false,
           children: [
-            'var',
-            'environment'
+            'Chapter3',
+            'Chapter4',
+            'Chapter5'
           ]
         }
       ],
