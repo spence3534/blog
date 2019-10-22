@@ -25,7 +25,8 @@ module.exports = {
           children: [
             'Chapter3',
             'Chapter4',
-            'Chapter5'
+            'Chapter5',
+            'Chapter6'
           ]
         }
       ],
