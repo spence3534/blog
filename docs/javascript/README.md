@@ -7,3 +7,4 @@ sidebarDepth: 3
 [变量、作用域和内存问题](./Chapter4.md)  
 [引用类型](./Chapter5.md)  
 [面向对象的程序设计](./Chapter6.md)  
+[函数表达式](./Chapter7.md)  
