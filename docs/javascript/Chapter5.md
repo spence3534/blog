@@ -1056,7 +1056,7 @@ console.log(stringValue.substr(3,-4)); // ""
 这个例子清晰地展示了上述三个方法之间的不同行为。在给slice()和substr()传递一个负值参数时，它们的行为相同。这是因为-3会被转换为8（字符串长度加参数11+(-3)=8），实际上相当于调用了slice(8)和substr(8)。但substring()方法则返回了全部字符串，因为它将-3转换为0。
 
 当第二个参数是负值是，这三个方法的行为各不相同。slice()方法会把第二个参数转换为7，这就相当于调用了slice(3,7)，因此返回"lo w"。substring()方法会把第二个参数转换为0，使调用变成了substring(3,0)，而由于这个方法会将较小的数作为开始位置，将较大的数作为结束位置，因此最终相当于调用了substring(0,3)。substr()也会将第二个参数转换为0，这也就意味着返回包含零个字符串的字符串，也就是一个字符串。
-#### 字符串位置方法
+### 字符串位置方法
 有两个可以从字符串中查找子字符串的方法：indexOf()和lastIndexOf()。这两个方法都是从一个字符串中搜索给定的字符串，然后返子字符串的位置（如果没有找到该子字符串，则返回-1）。这两个方法的区别在于：indexOf()方法从字符串的开头向后搜索子字符串，而lastIndexOf()方法是从字符串的末尾向前搜索子字符串。看一个例子：
 ```js
 var stringValue = "hello world";
@@ -1087,7 +1087,7 @@ console.log(positions); // 3,24,32,35,52
 ```
 这个例子通过不断增加indexOf()方法开始查找的位置，遍历了一个长字符串。在循环之外，首先找到了"e"在字符串中的初始位置；而进入循环后，则每次都给indexOf()传递上一次的位置加1。这样，就确保了每次新搜索都从上一次找到的子字符串的后面开始。每次搜索返回的位置依次被保存在数组position中，以便将来使用。
 
-#### trim()方法
+### trim()方法
 ECMAScript5为所有字符串定义了trim()方法。这个方法会创建一个字符串的副本，删除前置及后缀的所有空格，然后返回结果。例如：
 ```js
 var stringValue = "     hello world     ";
@@ -1108,7 +1108,7 @@ console.log(stringValue.toLocaleLowerCase()); // hello world
 console.log(stringValue.toLowerCase()); // hello world
 ```
 以上代码调用的toLocaleUpperCase()和toUpperCase()都返回了"HELLO WORLD"，就像调用toLocaleLowerCase()和toLowerCase()都返回"hello world"一样。一般来说，在不知道自己的代码将在哪种语言环境中运行的情况下，还是使用针对地区的方法更稳妥一些。
-#### 字符串的模式匹配方法
+### 字符串的模式匹配方法
 String类型定义了几个用于在字符串中匹配模式的方法。第一个方法就是**match()**，在字符串上调用这个方法，本质上与调用RegExp的exec()方法相同。match()方法只接受一个参数，要么是一个正则表达式，要么是一个RegExp对象。请看下面的例子：
 ```js
   var text = "cat bat sat, fat";
@@ -1181,7 +1181,7 @@ console.log(colors3); // ["", ",", ",", ",", ""]
 ### Global对象
 ![An image](./images/global.png)
 Globle（全局）对象可以说是ECMAScript中最特别的一个对象了，因为不管你从什么角度上看，这个对象都是不存在的。ECMAScript中的Global对象在某种意义上是作为一个终极的“兜底儿对象”来定义的。换句话说，不属于任何其他对象的属性和方法，最终都是它的属性和方法。事实上，没有全局变量或全局函数；所有在全局作用域中定义的属性和函数，都是Global对象的属性。前面介绍过的那些函数，诸如isNaN()、isFinite()、parseInt()以及parseFloat()，实际上全都是Global对象的方法。除此之外，Global对象还包含其他一些方法。
-#### eval()方法
+### eval()方法
 eval()方法也是整个ECMAScript语言中最强大的一个方法，eval()方法就想一个完整的ECMAScript解析器，它只接收一个参数，即要执行的ECMAScript（或JavaScript）字符串。看下面的例子：
 ```js
 eval("alert('hi')");
@@ -1210,7 +1210,7 @@ alert(msg);
 "use strict";
 eval = "hi"; // err
 ```
-#### window对象
+### window对象
 ECMAScript虽然没有指出如何直接访问Global对象，但web浏览器都是将这个全局对象作为
 window对象的一部分加以实现的。因此，在全局作用域中声明的所有变量和函数，就都成为
 了window对象的属性。来看下面的例子。
@@ -1231,11 +1231,11 @@ var global = function() {
 console.log(global);
 ```
 以上代码创建了一个立即调用的函数表达式，返回this的值。如前所述，在没有给函数明确指定this值的情况下（无论是通过将函数添加为对象的方法，还是通过调用call()或apply()），this值等于Global对象。而像这样通过简单地返回this来取得Global对象，在任何执行环境下都可行的。后面深入讨论函数表达式。
-#### Math对象
+### Math对象
 ![An image](./images/math1.png)
 ECMAScrpipt还为保存数学公式和信息提供了一个公共位置，即Math对象。与我们在JavaScript直接编写的计算功能相比，Math对象提供的计算功能执行起来要快得多。Math对象中还提供了辅助完成这些计算的属性和方法。
 
-#### min()和max()方法
+### min()和max()方法
 Math对象还包含许多方法，用于辅助完成简单和复杂的数学计算。
 其中，min()和max()方法用于确定一组数值中的最小值和最大值。这两个方法都可以接收任意多
 个数值参数，如下面的例子所示。
@@ -1255,7 +1255,7 @@ console.log(max); // 9
 ```
 这个技巧的关键是把Math对象作为apply()的第一个参数，从而确定地设置this值。然后，可以将
 任何数组作为第二个参数。
-#### 舍入方法
+### 舍入方法
 下面来介绍将小数值舍入为整数的几个方法：Math.celi()、Math.floor()和Math.round()。这三个方法分别遵循下列舍入规则：
 *  Math.ceil()执行向上舍入，即它总是将数值向上舍入为最接近的整数；
 *  Math.floor()执行向下舍入，即它总是将数值向下舍入为最接近的整数；
@@ -1274,7 +1274,7 @@ console.log(Math.floor(25.5)); // 25
 console.log(Math.floor(25.1)); // 25
 ```
 对于所有介于25和26（不包括26）之间的数值，Math.ceil()始终返回26，因为它执行的是向上舍入。Math.round()方法只在数值大于等于25.5时返回26；否则返回25。最后，Math.floor()对所有介于25和26（不包括26）之间的数值都返回25。
-#### random()方法
+### random()方法
 Math.random()方法返回大于等于0小于1的一个随机数。对于某些站点来说，这个方法非常实用，因为可以利用它来随机显示一些名人名言和新闻事件。套用下面的公式，就可以利用Math.random()从某个整数范围内随机选择一个值。
 ```js
   值 = Math.floor(Math.random() * 可能值的总数 + 第一个可能的值)
@@ -1308,7 +1308,7 @@ console.log(color); // 可能是数组中包含的任何一个字符串
 ```
 在这个例子中，传递给selectFrom()的第二个参数是数组的长度减1，也就是数组中的最后一项的位置。
 
-#### 其他Math方法
+### 其他Math方法
 ![An image](./images/math2.png)
 ## 总结
 对象在JavaScript中被称为引用类型的值，而且有一些内置的引用类型可以用来创建特定的对象，现简要总结如下：
