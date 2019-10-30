@@ -140,7 +140,7 @@ setTimeout(incrementNumber, 500);
 |hash|"#contents"|返回URL中的hash（#号后跟零活多个字符串）<br>如果URL中不包含散列，则返回空字符串|
 |host|"www.baidu.com:80"|返回服务器名称和端口号（如果有）|
 |hostname|"www.baidu.com"|返回不带端口号的服务器名称|
-|href"|https://www.baidu.com"|返回当前加载页面的完整URL。而location对象<br>的toString()方法也返回这个值|
+|href|"https://www.baidu.com"|返回当前加载页面的完整URL。而location对象<br>的toString()方法也返回这个值|
 |pathname|"/WileyCDA/"|返回URL中的目录和（或）文件名|
 |port|"8080"|返回URL中指定的端口号。如果URL中不包含端<br>口号，则这个属性返回空字符串|
 |protocol|"http:"|返回页面使用的协议。通常是http:或https:|
