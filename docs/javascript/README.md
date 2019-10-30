@@ -8,3 +8,4 @@ sidebarDepth: 3
 [引用类型](./Chapter5.md)  
 [面向对象的程序设计](./Chapter6.md)  
 [函数表达式](./Chapter7.md)  
+[BOM](./Chapter8.md)
