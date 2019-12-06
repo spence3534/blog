@@ -149,34 +149,34 @@ setTimeout(incrementNumber, 500);
 虽然通过上面的属性可以访问到location对象的大多数信息，但其中访问URL包含的查询字符串的属性并不方便。尽管location.search返回从问号到URL末尾的所有内容，但却没有办法逐个访问其中的每个查询字符串参数。为此，可以像下面这样创建一个函数，用以解析查询字符串，然后返回包含所有参数的一个对象：
 ```js
 function getQueryStringArgs() {
-// 取得查询字符串并去掉开头的问号
-var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+  // 取得查询字符串并去掉开头的问号
+  var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
 
-// 保存数据的对象
-args = {},
+  // 保存数据的对象
+  args = {},
 
-// 取得每一项
-items = qs.length ? qs.split("&") : [],
-item = null,
-name = null,
-value = null,
+  // 取得每一项
+  items = qs.length ? qs.split("&") : [],
+  item = null,
+  name = null,
+  value = null,
 
-// 在for循环中使用
-i = 0,
-len = items.length;
+  // 在for循环中使用
+  i = 0,
+  len = items.length;
 
-// 逐个将每一项添加到args对象中
-for (i = 0; i < len; i++) {
-  item = items[i].split("=");
-  name = decodeURIComponent(item[0]);
-  value = decodeURIComponent(item[1]);
+  // 逐个将每一项添加到args对象中
+  for (i = 0; i < len; i++) {
+    item = items[i].split("=");
+    name = decodeURIComponent(item[0]);
+    value = decodeURIComponent(item[1]);
 
-  if (name.length) {
-    args[name] = value;
+    if (name.length) {
+      args[name] = value;
+    }
   }
-}
 
-return args;
+  return args;
 }
 ```
 这个函数的第一步是先去掉查询字符串开头的问号。当然，前提是location.search中必须要包含一或多个字符。然后，所有参数将被保存在args对象中，该对象以字面量形式创建。接下来，根据和号（&）来分割查询字符串，并返回name=value格式的字符串数组。下面的for循环会迭代这个数组，然后再根据等于号分割每一项，从而返回第一项为参数名，第二项为参数值的数组。再使用decodeURIComponent()分别解码name和value（因为查询字符串应该是被编码过的）。最后，将name作为args对象的属性，将value作为相应属性的值。下面给出了使用这个函数的示例。
@@ -233,10 +233,10 @@ location.reload(true); // 重新加载（从服务器重新加载）
 ```
 位于reload()调用之后的代码可能会也可能不执行，这要取决于网络延迟或系统资源等因素。为此，最好将reload()放在代码的最后一行。
 ## navigator对象
-navigator对象的属性通常用于检测显示网页的浏览器类型（后面会详细讨论）有一些方法都不是常用的这里就不说了。下表列出navigator的属性
+navigator对象的属性通常用于检测显示网页的浏览器类型。下表列出navigator的属性。(图来自https://www.w3cschool.cn)
 ![An image](./images/navigator.png)
 ## screen对象
-JavaScript中有几个对象在编程中用处不大，而screen对象就是其中之一。screen对象基本上只用来表明客户端的能力，其中包括浏览器窗口外部的显示器的信息，如像素宽度和高度等。每个浏览器中的screen对象都包含着各不相同的属性。下表列出了screen所有属性。
+JavaScript中有几个对象在编程中用处不大，而screen对象就是其中之一。screen对象基本上只用来表明客户端的能力，其中包括浏览器窗口外部的显示器的信息，如像素宽度和高度等。每个浏览器中的screen对象都包含着各不相同的属性。下表列出了screen所有属性。(图来自https://www.w3cschool.cn)
 ![An image](./images/screen.png)
 涉及移动设备的屏幕大小时，情况有点不一样。运行ios的设备始终会像是把设备竖着拿在手里一样，因此返回的值是768x1024。而Android设备则会相应调用**screen.width和screen.height**的值。
 ## history对象
