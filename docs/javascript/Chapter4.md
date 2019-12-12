@@ -47,37 +47,11 @@ var obj2 = obj1;
 obj1.name = "xiaoli";
 console.log(obj2.name); // xiaoli
 ```
-首先，变量**obj1**保存了一个对象的新实例。然后，这个值被复制到了**obj2**中；换句话说，**obj1**和**obj2**都是指向同一个对象。这样，当为**obj1**添加**name**属性后，可以通过**obj2**来访问这个属性，因为这两个变量引用的都是同一个对象。下图展示了保存在变量对象中的变量和保存在堆中的对象之间的这种关系。（自己画的，有点丑。嘻嘻!）
+首先，变量**obj1**保存了一个对象的新实例。然后，这个值被复制到了**obj2**中；换句话说，**obj1**和**obj2**都是指向同一个对象。这样，当为**obj1**添加**name**属性后，可以通过**obj2**来访问这个属性，因为这两个变量引用的都是同一个对象。下图展示了保存在变量对象中的变量和保存在堆中的对象之间的这种关系。
 ![An image](./images/heap.png)
 
-### 检测类型：
-如果要检测一个变量是不是基本数据类型，那么**typeof**操作符是最佳工具。**typeof**操作符是确定一个变量是字符串，数值，布尔值，还是undefined的最佳工具。如果变量的值是一个对象和**null**的话，则会返回一个**object**。
-```js
-var s = "xiaoli";
-var b = true;
-var i = 22;
-var u;
-var n = null;
-var o = new Object();
-console.log(typeof s); //string
-console.log(typeof b); //boolean
-console.log(typeof i); //number
-console.log(typeof u); //undefined
-console.log(typeof n); //object
-console.log(typeof o); //object
-```
-虽然说typeof是检测基本数据类型时非常得力的助手，但是在检测引用类型的值时这个操作符的用处不大，我们并不是想知道某个值是对象，而是想知道它是什么类型的对象这里就用到了**instanceof**操作符如果变量是给定引用类型（根据它的原型链来识别，后面会讲到原型链）的实例，那么**instanceof**操作符就会返回true，根据规定，所有引用类型的值都是object的实例因此，在检测引用类型值和object构造函数时，**instanceof**操作符始终都会返回true。如果使用instanceof检测基本类型则会返回false，因为基本类型不是对象。
-```js
-var person = new Object();
-var perno = new Array;
-var pername = new RegExp;
-console.log(person instanceof Object); //true
-console.log(perno instanceof Array ); //true
-console.log(pername instanceof RegExp); //true
-```
-
 ### 传递参数：
-JavaScript中所有函数的参数都是按值传递的。也就说是把函数外部的值复制给函数内部的参数和复制变量值一样。访问变量由按值和按引用两种方式，而参数只能按值传递。在向参数传递基本类型的值时，被传递的值会被复制给一个局部变量(即命名参数,或者arguments对象中的一个元素)。在向参数传递引用类型的值时，会把这个值的内存中的地址复制给一个局部变量，因此这个局部变量的变化会反映在函数的外部。
+ECMAScript中所有函数的参数都是按值传递的。也就说是把函数外部的值复制给函数内部的参数和复制变量值一样。访问变量由按值和按引用两种方式，而参数只能按值传递。在向参数传递基本类型的值时，被传递的值会被复制给一个局部变量(即命名参数,或者arguments对象中的一个元素)。在向参数传递引用类型的值时，会把这个值的内存中的地址复制给一个局部变量，因此这个局部变量的变化会反映在函数的外部。
 
 下面的例子addTen()函数有一个参数num，而参数实际上就是函数的局部变量。在调用这个函数时，变量count作为参数被传递给函数，这个变量的值是20。于是数值20被复制给参数num以便在addTen()中使用。在函数内部，参数num的值被加上了10。但这一个变化不会影响函数外部的count变量。num与变量count是互不相识的，它们仅仅是具有相同的值。
 ```js
@@ -111,6 +85,31 @@ function setName(obj) {
 var person = new Object;
 setName(person);
 console.log(person.name) //xiaoli
+```
+### 检测类型：
+如果要检测一个变量是不是基本数据类型，那么**typeof**操作符是最佳工具。**typeof**操作符是确定一个变量是字符串，数值，布尔值，还是undefined的最佳工具。如果变量的值是一个对象和**null**的话，则会返回一个**object**。
+```js
+var s = "xiaoli";
+var b = true;
+var i = 22;
+var u;
+var n = null;
+var o = new Object();
+console.log(typeof s); //string
+console.log(typeof b); //boolean
+console.log(typeof i); //number
+console.log(typeof u); //undefined
+console.log(typeof n); //object
+console.log(typeof o); //object
+```
+虽然说typeof是检测基本数据类型时非常得力的助手，但是在检测引用类型的值时这个操作符的用处不大，我们并不是想知道某个值是对象，而是想知道它是什么类型的对象这里就用到了**instanceof**操作符如果变量是给定引用类型（根据它的原型链来识别，后面会讲到原型链）的实例，那么**instanceof**操作符就会返回true，根据规定，所有引用类型的值都是object的实例因此，在检测引用类型值和object构造函数时，**instanceof**操作符始终都会返回true。如果使用instanceof检测基本类型则会返回false，因为基本类型不是对象。
+```js
+var person = new Object();
+var perno = new Array;
+var pername = new RegExp;
+console.log(person instanceof Object); //true
+console.log(perno instanceof Array ); //true
+console.log(pername instanceof RegExp); //true
 ```
 
 ## 执行环境及作用域
