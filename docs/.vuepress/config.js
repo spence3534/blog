@@ -20,7 +20,7 @@ module.exports = {
     sidebar:{
       '/javascript/': [
         {
-          title: 'javascript基础',
+          title: 'JavaScript',
           collapsable: false,
           children: [
             'Chapter3',
@@ -28,7 +28,11 @@ module.exports = {
             'Chapter5',
             'Chapter6',
             'Chapter7',
-            'Chapter8'
+            'Chapter8',
+            'Chapter10',
+            'Chapter11',
+            'Chapter12',
+            'Chapter13'
           ]
         }
       ],
