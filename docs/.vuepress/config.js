@@ -32,7 +32,9 @@ module.exports = {
             'Chapter10',
             'Chapter11',
             'Chapter12',
-            'Chapter13'
+            'Chapter13',
+            'Chapter14',
+            'Chapter15'
           ]
         }
       ],
