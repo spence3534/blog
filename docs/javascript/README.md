@@ -13,3 +13,6 @@ sidebarDepth: 3
 [DOM扩展](./Chapter11.md)  
 [DOM2和DOM3](./Chapter12.md)  
 [事件](./Chapter13.md)  
+[表单脚本](./Chapter14.md)  
+[使用Canvas绘图](./Chapter15.md)  
+[HTML5脚本编程](./Chapter16.md)  
