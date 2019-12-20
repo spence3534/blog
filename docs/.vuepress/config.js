@@ -36,7 +36,8 @@ module.exports = {
             'Chapter14',
             'Chapter15',
             'Chapter16',
-            'Chapter20'
+            'Chapter20',
+            'Chapter21'
           ]
         }
       ],

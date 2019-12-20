@@ -17,3 +17,4 @@ sidebarDepth: 3
 [使用Canvas绘图](./Chapter15.md)  
 [HTML5脚本编程](./Chapter16.md)  
 [JSON](./Chapter20.md)  
+[Ajax与Comet](./Chapter21.md)  
