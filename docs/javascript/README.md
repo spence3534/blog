@@ -18,3 +18,4 @@ sidebarDepth: 3
 [HTML5脚本编程](./Chapter16.md)  
 [JSON](./Chapter20.md)  
 [Ajax与Comet](./Chapter21.md)  
+[高级技巧](./Chapter22.md) 
