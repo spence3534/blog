@@ -15,6 +15,10 @@ module.exports = {
       {
         text: 'JavaScript',
         link: '/javascript/'
+      },
+      {
+        text: 'ECMAScript6',
+        link: '/es6/'
       }
     ],
     sidebar:{
@@ -42,6 +46,14 @@ module.exports = {
           ]
         }
       ],
+      '/es6/': [{
+        title: 'ECMAScript6',
+        collapsable: false,
+        children: [
+          'chapter2',
+          'chapter3'
+        ]
+      }],
       sidebarDepth: 0,
     }
   }
