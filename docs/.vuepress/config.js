@@ -1,6 +1,6 @@
 module.exports = {
-  title:'xiaoLi的博客',
-  description: 'Hello, welcome to xiaoLi blog',
+  title:'会前端的图图',
+  description: 'Hello, welcome to 会前端的图图 blog',
   base:'/',
   dest: './dist',
   head: [
