@@ -51,7 +51,9 @@ module.exports = {
         collapsable: false,
         children: [
           'chapter2',
-          'chapter3'
+          'chapter3',
+          'chapter4',
+          'chapter7'
         ]
       }],
       sidebarDepth: 0,
