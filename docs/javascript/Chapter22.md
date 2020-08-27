@@ -103,11 +103,7 @@ function Rectangle(width, height) {
 var rect = new Rectangle(5, 10);
 console.log(rect.sides); // undefined
 ```
-在这段代码中。Polygon构造函数是作用域安全的，然而Rectangle构造函数则不是。新创建一个Rectangle
-实例之后，这个实例应该通过Polygon.call()来继承Polygon的sides属性。但是，由于Polygon构造函数
-是作用域安全的，this对象并非Polygon的实例，所以会创建并返回一个新的Polygon对象。Rectangle构造
-函数中的this对象并没有得到增长，同时Polygon.call()返回的值也没有用到，所以Rectangle实例中就
-不会有sides属性。
+在这段代码中。Polygon构造函数是作用域安全的，然而Rectangle构造函数则不是。新创建一个Rectangle实例之后，这个实例应该通过Polygon.call()来继承Polygon的sides属性。但是，由于Polygon构造函数是作用域安全的，this对象并非Polygon的实例，所以会创建并返回一个新的Polygon对象。Rectangle构造函数中的this对象并没有得到增长，同时Polygon.call()返回的值也没有用到，所以Rectangle实例中就不会有sides属性。
 
 如果构造函数窃取结合使用原型链或者寄生组合则可以解决这个问题。考虑以下例子：
 ```js
@@ -344,13 +340,7 @@ function curry(fn) {
   }
 }
 ```
-curry()函数的主要工作就是将被返回函数的参数进行排序。curry()的第一个参数是要进行柯里化的函
-数，其他参数是要传入的值。为了获取第一个参数之后的所有参数，在arguments对象上调用了slice()
-方法，并传入参数1表示被返回的数组包含从第二个参数开始的所有参数。然后args数组包含了来自外部
-函数的参数。在内部函数中，创建了innerArgs数组用来存放所有传入的参数（又一次用到了slice()）。
-有了存放来自外部函数和内部函数的参数数组后，就可以使用concat()方法将它们组合为finalArgs，然
-后使用apply()将结果传递给该函数。注意这个函数并没有考虑到执行环境，所以调用apply()时第一个
-参数是null。curry()函数可以按以下方式应用。
+curry()函数的主要工作就是将被返回函数的参数进行排序。curry()的第一个参数是要进行柯里化的函数，其他参数是要传入的值。为了获取第一个参数之后的所有参数，在arguments对象上调用了slice()方法，并传入参数1表示被返回的数组包含从第二个参数开始的所有参数。然后args数组包含了来自外部函数的参数。在内部函数中，创建了innerArgs数组用来存放所有传入的参数（又一次用到了slice()）。有了存放来自外部函数和内部函数的参数数组后，就可以使用concat()方法将它们组合为finalArgs，然后使用apply()将结果传递给该函数。注意这个函数并没有考虑到执行环境，所以调用apply()时第一个参数是null。curry()函数可以按以下方式应用。
 ```js
 function add(num1, num2) {
   return num1 + num2;
@@ -359,9 +349,7 @@ function add(num1, num2) {
 var curriedAdd = curry(add, 5);
 console.log(curriedAdd(3)); // 8
 ```
-在这个例子中，创建了第一个参数绑定为5的add()的柯里化版本。当调用curriedAdd()并传入3时，3
-会成为add()的第二个参数，同时第一个参数依然是5，最后结果便是和8。也可以像下面例子这样给出
-所有的函数参数：
+在这个例子中，创建了第一个参数绑定为5的add()的柯里化版本。当调用curriedAdd()并传入3时，3会成为add()的第二个参数，同时第一个参数依然是5，最后结果便是和8。也可以像下面例子这样给出所有的函数参数：
 ```js
 function add(num1, num2) {
   return num1 + num2;
@@ -382,10 +370,7 @@ function bind(fn, context) {
   };
 }
 ```
-对curry()函数的主要更改在于传入的参数个数，以及它如何影响代码的结果。curry()仅仅接受一个
-要包裹的函数作为参数，而bind()同时接受函数和一个object对象。这表示给被绑定的函数的参数是
-从第三个开始而不是第二个，这就要更改slice()的第一处调用。另一处更改是在倒数第3行将object
-对象传给apply()。当使用bind()时，它会返回绑定到给定环境的函数，并且可能它其中某些函数参数
+对curry()函数的主要更改在于传入的参数个数，以及它如何影响代码的结果。curry()仅仅接受一个要包裹的函数作为参数，而bind()同时接受函数和一个object对象。这表示给被绑定的函数的参数是从第三个开始而不是第二个，这就要更改slice()的第一处调用。另一处更改是在倒数第3行将object对象传给apply()。当使用bind()时，它会返回绑定到给定环境的函数，并且可能它其中某些函数参数
 已经被设好。当你想除了event对象再额外给事件传递参数时，这非常有用，例如：
 ```js
 var handler = {
@@ -398,9 +383,7 @@ var handler = {
 var btn = document.getElementById("my-btn");
 btn.addEventListener("click", bind(handler.handleClick, handler, "my-btn"));
 ```
-在这个更新过的例子中，handler.handleClick()方法接受了两个参数：要处理的元素的名字和e对象。
-作为第三个参数传递给bind()函数的名字，又被传递给了handler.handleClick()，而handler.handleClick()
-也会同时接收到e对象。
+在这个更新过的例子中，handler.handleClick()方法接受了两个参数：要处理的元素的名字和e对象。作为第三个参数传递给bind()函数的名字，又被传递给了handler.handleClick()，而handler.handleClick()也会同时接收到e对象。
 
 用ECMAScript5中的bind()方法也能实现函数柯里化，只要在this的值之后再传入另一个参数即可。
 ```js
@@ -614,7 +597,7 @@ function myDebounce() {
 ```
 
 ### 函数节流
-关于函数节流的代码实现有很多，下面的throttle函数的原理是，将即将被执行的函数用setTimeout延迟一段时间执行。如果该次延迟执行还没有完成，则忽略接下来调用该函数的请求。throttle函数接受2个参数，第一个是要被延迟的函数，第二个参数是延迟执行的时间。
+关于函数节流的代码实现有很多，下面的throttle函数的原理是，将即将被执行的函数用setTimeout延迟一段时间执行。如果该次延迟执行还没有完成，则不会调用该函数。throttle函数接受2个参数，第一个是要被延迟的函数，第二个参数是延迟执行的时间。
 ```js
 window.onload = function() {
   // 通过id获取按钮，并绑定一个click事件
@@ -652,29 +635,30 @@ function throttle(fn, interval) {
   }
 }
 ```
-下面这个函数节流是结合了时间戳的版本。接收三个参数：一个为需要节流的函数，第二个为设定时间间隔，
-第三个是执行间隔时长。
+下面这个函数节流是结合了时间戳的版本。接收三个参数：一个为需要节流的函数，第二个为设定时间间隔，第三个是执行间隔时长。
 ```js
 function throttle(fn, wait, time) {
-  var previous = null; // 设置上一次的时间
-  var timer = null; // 设置定时器的返回值
+  let previous = null; // 用于记录上一次设置的时间
+  let timer = null; // 设置定时器的返回值
 
   return function() {
-    // 获取当前时间戳
-    var now = + new Date();
+    // 获取当前的时间戳
+    let now = + new Date();
 
+    // 首先用previous变量来做是否是第一次的标识。如果是就把当前时间戳赋给previous变量。
     if (!previous) {
-      previous = now
+      previous = now;
     }
 
-    // 如果当前时间减去上次的时间大于设置的执行时间间隔的话就执行一次
+    // 然后用当前时间戳减去上次时间戳大于设置的执行时间间隔的话，那么就执行一次。
     if (now - previous > time) {
       clearTimeout(timer);
       fn.apply(this, arguments);
       previous = now;
     } else {
+      // 否则就用设定时间间隔执行该函数，wait传500毫秒就500毫秒才执行。
       clearTimeout(timer);
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         fn.apply(this, arguments);
       }, wait);
     }
