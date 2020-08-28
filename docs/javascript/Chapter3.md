@@ -1,6 +1,6 @@
 # 基础
 ## 变量
-定义变量时要使用var操作符，后跟变量名，如下所示：
+定义变量时要使用`var`操作符，后跟变量名，如下所示：
 ```js
   var message;
 ```
@@ -8,13 +8,13 @@
 ```js
   var message = "hi";
 ```
-在此，变量message中保存了一个字符串值"hi"。像这样初始化变量并不会把它标记为字符串类型；初始化的过程就是给变量赋一个值那么简单。因此可以在修改变量值的同时修改值的类型，如下所示：
+在此，变量`message`中保存了一个字符串值`"hi"`。像这样初始化变量并不会把它标记为字符串类型；初始化的过程就是给变量赋一个值那么简单。因此可以在修改变量值的同时修改值的类型，如下所示：
 ```js
   var message = "hi";
   message = 10;
   console.log(message); // 10
 ```
-有一点必须注意，即用var操作符定义的变量将成为定义该变量的作用域中的局部变量。也就是说，如果在函数中使用var定义一个变量，那么这个变量在函数退出后就会被销毁，例如：
+有一点必须注意，即用`var`操作符定义的变量将成为定义该变量的作用域中的局部变量。也就是说，如果在函数中使用`var`定义一个变量，那么这个变量在函数退出后就会被销毁，例如：
 ```js
   function test() {
     var message = "hi";
@@ -22,7 +22,7 @@
   test();
   console.log(message); // ReferenceError: message is not defined
 ```
-不过，可以像下面这样省略var操作符，从而创建一个全局变量：
+不过，可以像下面这样省略`var`操作符，从而创建一个全局变量：
 ```js
 function test() {
   message = "hi";
@@ -30,7 +30,7 @@ function test() {
 test();
 console.log(message); // hi
 ```
-这个例子省略了var操作符，因而message就成了全局变量。这样，只要调用一次test()函数，这个变量就有了定义，就可以在函数外部的任何地方被访问到。
+这个例子省略了`var`操作符，因而`message`就成了全局变量。这样，只要调用一次`test()`函数，这个变量就有了定义，就可以在函数外部的任何地方被访问到。
 
 可以使用一条语句定义多个变量，只要像下面这样把每个变量（初始化或不初始化均可）用逗号分隔开即可：
 ```js
@@ -39,17 +39,16 @@ var message = "hi",
   age = 29;
 ```
 ## 数据类型
-ECMAScript中有5种简单数据类型（也称为基本数据类型）：Undefined、Null、Boolean、Number和String。还有一种复杂数据类型--Object。
+ECMAScript中有`5`种简单数据类型（也称为基本数据类型）：`Undefined、Null、Boolean、Number`和`String`。还有一种复杂数据类型--`Object`。
 
 typeof操作符
-鉴于ECMAScript是松散类型的，因此需要有一种手段来检测给定变量的数据类型----typeof就是
-负责提供这方面信息的操作符。对一个值使用typeof操作符可能返回下列某个字符串：
-* "undefined"：表示这个值未定义；
-* "boolean"：表示这个值是布尔值；
-* "string"：表示这个值是字符串；
-* "number"：表示这个值是数值；
-* "object"：表示这个值是对象或者null；
-下面是几个使用typeof操作符的例子：
+鉴于ECMAScript是松散类型的，因此需要有一种手段来检测给定变量的数据类型----`typeof`就是负责提供这方面信息的操作符。对一个值使用typeof操作符可能返回下列某个字符串：
+* `"undefined"`：表示这个值未定义；
+* `"boolean"`：表示这个值是布尔值；
+* `"string"`：表示这个值是字符串；
+* `"number"`：表示这个值是数值；
+* `"object"`：表示这个值是对象或者`null`；
+下面是几个使用`typeof`操作符的例子：
 ```js
   var message = "some string";
   console.log(typeof message); // string
@@ -57,25 +56,23 @@ typeof操作符
   console.log(typeof 95); // number
   console.log(typeof null); // object
 ```
-有时候，typeof操作符会返回一些令人迷惑但技术上却正确的值。比如，调用typeof null会返回"object"，因为特殊值null被认为是一个空的对象引用。
+有时候，`typeof`操作符会返回一些令人迷惑但技术上却正确的值。比如，调用`typeof null`会返回`"object"`，因为特殊值`null`被认为是一个空的对象引用。
 
 ### Undefined类型
-Undefined（未定义）类型只有一个值，即特殊的undefined。在使用var声明变量但未对其加初始化时，这个变量值就是undefined，例如：
+`Undefined`（未定义）类型只有一个值，即特殊的`undefined`。在使用`var`声明变量但未对其加初始化时，这个变量值就是`undefined`，例如：
 ```js
   var message;
   console.log(message); // undefined
 ```
 ### Null类型
-Null（空）类型是第二个只有一个值的数据类型，这个特殊的值是null。从逻辑角度来看，null
-值表示一个空对象指针，而这也正是使用typeof操作符检测null值是会返回"object"的原因，如
+`Null`（空）类型是第二个只有一个值的数据类型，这个特殊的值是`null`。从逻辑角度来看，`null`值表示一个空对象指针，而这也正是使用`typeof`操作符检测`null`值是会返回`"object"`的原因，如
 下面的例子所示：
 ```js
   var car = null;
   console.log(typeof null); // object
 ```
 ### Boolean类型
-Boolean类型是ECMAScript中使用最多的一种类型，该类型只有两个字面值：true和false。
-在Number类型里面1表示true、0表示false。
+`Boolean`类型是ECMAScript中使用最多的一种类型，该类型只有两个字面值：`true`和`false`。在`Number`类型里面`1`表示`true`、`0`表示`false`。
 ```js
   var found = true;
   var lost = false;

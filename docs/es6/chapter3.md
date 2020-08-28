@@ -3,7 +3,8 @@
 ## 数组的解构赋值
 
 ### 基本用法
-ES6允许按照一定模式从数组和对象中提取值，然后对变量进行赋值，这被称为解构。
+ES6允许按照一定模式从数组和对象中提取值，然后对变量进行赋值，这被称为`解构`。
+
 以前，为变量赋值只能直接指定值。
 ```js
 let a = 1;
@@ -43,7 +44,7 @@ console.log(a); // a
 console.log(b); // undefined
 console.log(z); // []
 ```
-如果解构不成功，变量的值就等于undefined。
+如果解构不成功，变量的值就等于`undefined`。
 ```js
 let [foo] = [];
 let [bar, foo] = [1];
@@ -52,7 +53,7 @@ console.log(foo); // undefined
 console.log(bar); // 1
 console.log(foo); // undefined
 ```
-以上两种情况都属于解构不成功，foo的值都会等于undefined。
+以上两种情况都属于解构不成功，`foo`的值都会等于`undefined`。
 
 另一种情况是不完全解构，即等号左边的模式只匹配一部分的等号右边的数组。这种情况下，解构依然可以成功。
 ```js
@@ -77,12 +78,12 @@ let [foo] = undefined;
 let [foo] = null;
 let [foo] = {};
 ```
-上面的语句都会报错，因为等号右边的值或是专为对象以后不具备Interator接口（前五个表达式），或是本身就不具备Iterator接口（最后一个表达式）。对于Set结构，也可以使用数组的解构赋值。
+上面的语句都会报错，因为等号右边的值或是专为对象以后不具备`Interator`接口（前五个表达式），或是本身就不具备`Iterator`接口（最后一个表达式）。对于`Set`结构，也可以使用数组的解构赋值。
 ```js
 let [x, y, z] = new Set(['a', 'b', 'c']);
 console.log(x); // a
 ```
-事实上，只要某种数据结构具有Iterator接口，都可以采用数组形式的解构赋值。
+事实上，只要某种数据结构具有`Iterator`接口，都可以采用数组形式的解构赋值。
 ```js
 function* fibs() {
   let a = 0;
@@ -96,7 +97,7 @@ function* fibs() {
 let [first, second, third, fourth, fifth, sixth] = fibs();
 console.log(sixth); // 5
 ```
-上面的代码中，fibs是一个Generator函数（后面会详细讲解），原生具有Iterator接口。结构赋值会依次从这个接口中获取值。
+上面的代码中，`fibs`是一个`Generator`函数（后面会详细讲解），原生具有`Iterator`接口。结构赋值会依次从这个接口中获取值。
 
 ### 默认值
 解构赋值允许指定默认值。
@@ -118,10 +119,9 @@ console.log(sixth); // 5
   let [b = 1] = [null];
   console.log(b); // null
 ```
-上面的代码中，如果一个数组成员是null，默认值就不会生效，因为null不严格等于undefined。
+上面的代码中，如果一个数组成员是`null`，默认值就不会生效，因为`null`不严格等于`undefined`。
 :::warning
-！注意，ES6内部使用严格相等运算符（===）判断一个位置是否有值。所以，如果一个数组成员
-不严格等于undefined，默认值是不会生效的。
+！注意，ES6内部使用严格相等运算符（===）判断一个位置是否有值。所以，如果一个数组成员不严格等于undefined，默认值是不会生效的。
 :::
 如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到时才会求值。
 ```js
@@ -132,7 +132,7 @@ function f() {
 let [x = f()] = [1];
 console.log(x); // 1
 ```
-上面的代码中，因为x能取到值，所以函数f根本不会执行。上面的代码其实等价于下面
+上面的代码中，因为`x`能取到值，所以函数`f`根本不会执行。上面的代码其实等价于下面
 的代码。
 ```js
 let x;
@@ -160,7 +160,7 @@ let [f = g, g = 1] = [];
 console.log(f); // ReferenceError
 console.log(g); // ReferenceError
 ```
-上面最后一个表达式之所以会报错，是因为f用到默认值g时，g还没有声明。
+上面最后一个表达式之所以会报错，是因为`f`用到默认值`g`时，`g`还没有声明。
 
 ## 对象的解构赋值
 解构赋值不仅用于数组，还可以对对象进行解构赋值
@@ -184,7 +184,7 @@ console.log(foo); // aaa
 let { baz } = { bar: "bbb" };
 console.log(baz); // undefined
 ```
-在这个例子中，变量没有对应的同名属性，导致取不到值，最后打印出了undefined。
+在这个例子中，变量没有对应的同名属性，导致取不到值，最后打印出了`undefined`。
 
 如果变量名与属性名不一致，必须写成下面这样。
 ```js
@@ -208,7 +208,7 @@ let { foo: baz } = { foo: "aaa", bar: "bbb" };
 console.log(baz); // aaa
 console.log(foo); // Uncaught ReferenceError: foo is not defined
 ```
-上面的代码中，foo是匹配的模式，baz才是变量。真正被赋值的是变量baz，而不是模式foo。
+上面的代码中，`foo`是匹配的模式，`baz`才是变量。真正被赋值的是变量`baz`，而不是模式`foo`。
 
 与数组一样的，解构可以用于嵌套结构的对象。
 ```js
@@ -223,7 +223,7 @@ let { p: [x, { y }] } = obj;
 
 console.log(x, y); // Hello world
 ```
-需要注意的是，这时p是模式，不是变量，因此不会被赋值，如果p也要作为变量赋值，可以写成
+需要注意的是，这时`p`是模式，不是变量，因此不会被赋值，如果`p`也要作为变量赋值，可以写成
 下面这样。
 ```js
 let obj = {
@@ -256,7 +256,7 @@ console.log(line); // 1
 console.log(loc); // {start: {line: 1, column: 5}}
 console.log(start); // { line: 1, column: 5 }
 ```
-上面的例子进行了三次解构赋值，对loc、start、line三个属性的解构赋值。需要注意的是，最后一次对line属性的解构赋值之中，只有line是变量，loc和start都是模式，不是变量。
+上面的例子进行了三次解构赋值，对`loc、start、lin`e三个属性的解构赋值。需要注意的是，最后一次对`line`属性的解构赋值之中，只有`line`是变量，`loc`和`start`都是模式，不是变量。
 
 来看下面的嵌套赋值的例子。
 ```js
@@ -283,7 +283,7 @@ console.log(y); // 3
 let { message: msg = 'Something went wrong' } = { };
 console.log(msg); // Something went wrong
 ```
-默认值生效的条件是，对象属性值严格等于undefined。
+默认值生效的条件是，对象属性值严格等于`undefined`。
 ```js
 let { x = 3 } = { x: undefined };
 console.log(x); // 3
@@ -291,9 +291,9 @@ console.log(x); // 3
 let { y = 3 } = { y : null};
 console.log(y); // null
 ```
-上面的代码中，如果x属性等于null的话，就不严格相等于undefined，所以会导致默认值不会生效。
+上面的代码中，如果x属性等于`null`的话，就不严格相等于`undefined`，所以会导致默认值不会生效。
 
-如果解构失败的话，变量的值就等于undefined。
+如果解构失败的话，变量的值就等于`undefined`。
 ```js
 let { foo } = { bar: 'bar' };
 console.log(foo); // undefined
@@ -303,7 +303,7 @@ console.log(foo); // undefined
 // Uncaught TypeError: Cannot read property 'bar' of undefined
 let { foo: { bar } } = { baz: "baz" };
 ```
-上面的代码里，等号左边对象的foo属性对应一个子对象。该子对象的bar属性在解构时会报错，是因为foo这时等于undefined，再取子属性就会报错，来看下面的代码。
+上面的代码里，等号左边对象的`foo`属性对应一个子对象。该子对象的`bar`属性在解构时会报错，是因为`foo`这时等于`undefined`，再取子属性就会报错，来看下面的代码。
 ```js
 let _tmp = { baz: 'baz' };
 console.log(_tmp.foo.baz); // Uncaught TypeError: Cannot read property 'baz' of undefined
@@ -314,7 +314,7 @@ console.log(_tmp.foo.baz); // Uncaught TypeError: Cannot read property 'baz' of 
 let x;
 { x } = { x: 1 };
 ```
-上面的代码写法会报错，是因为JavaScript引擎会将{x}理解成一个代码块，从而发生语法错误，只有不将大括号写在行首，避免JavaScript将其解释为代码块，才能够解决这个问题。像下面这样的写法就不会报错了。整个解构赋值语句放在一个圆括号里面就可以了。关于圆括号的问题，后面会讲到。
+上面的代码写法会报错，是因为JavaScript引擎会将`{x}`理解成一个代码块，从而发生语法错误，只有不将大括号写在行首，避免JavaScript将其解释为代码块，才能够解决这个问题。像下面这样的写法就不会报错了。整个解构赋值语句放在一个圆括号里面就可以了。关于圆括号的问题，后面会讲到。
 ```js
 let x;
 ( { x } = { x: 1 } );
@@ -342,7 +342,8 @@ let { 0: first, [arr.length - 1] : last } = arr;
 console.log(first); // 1
 console.log(last); // 3
 ```
-上面的代码对数组进行对象解构。数组arr的0键对应的值是1，[arr.length - 1]就是2键，对应的值是3。方括号这种写法属于 “属性名表达式”。后面会讲到。
+上面的代码对数组进行对象解构。数组`arr`的`0`键对应的值是`1`，`[arr.length - 1]`就是`2`键，对应的值是`3`。方括号这种写法属于 “属性名表达式”。后面会讲到。
+
 ## 数值和布尔值的解构赋值
 解构赋值时，如果等号右边是数值和布尔值，则会先转为对象。
 ```js
@@ -352,13 +353,14 @@ console.log(s === Number.prototype.toString); // true
 let { toString: f } = true;
 console.log(f === Boolean.prototype.toString); // true
 ```
-上面的例子中，数值和布尔值的包装对象都有toString属性，因此变量s都能取得到值。
+上面的例子中，数值和布尔值的包装对象都有`toString`属性，因此变量`s`都能取得到值。
 
-解构赋值的规则是，只要等号右边的值不是对象或数组，就先将其转成对象，undefined和null都是无法转成对象，所以对它们进行解构赋值时都会报错。
+解构赋值的规则是，只要等号右边的值不是对象或数组，就先将其转成对象，`undefined`和`null`都是无法转成对象，所以对它们进行解构赋值时都会报错。
 ```js
 let { prop: x } = undefined; // Uncaught TypeError
 let { prop: y } = null; // Uncaught TypeError
 ```
+
 ## 函数参数的解构赋值
 函数的参数也可以使用解构赋值。
 ```js
@@ -367,7 +369,7 @@ function add([x, y]) {
 }
 console.log(add([1, 2])); // 3
 ```
-上面的例子中，函数add的参数表面上是一个数组，在传入参数的时候，数组参数就被解构成变量x和y。对于函数内部的代码来说，它们能感受到的参数就是x和y。
+上面的例子中，函数`add`的参数表面上是一个数组，在传入参数的时候，数组参数就被解构成变量`x`和`y`。对于函数内部的代码来说，它们能感受到的参数就是`x`和`y`。
 
 下面是另外一个例子。
 ```js
@@ -385,7 +387,7 @@ console.log(move({ x: 3 })); // [3, 0]
 console.log(move({})); // [0, 0]
 console.log(move()); // [0, 0]
 ```
-上面的例子中，函数move的参数是一个对象，通过对这个对象进行解构，得到变量x和y的值。如果解构失败，x和y等于默认值。
+上面的例子中，函数`move`的参数是一个对象，通过对这个对象进行解构，得到变量`x`和`y`的值。如果解构失败，`x`和`y`等于默认值。
 
 注意，下面的写法会得到不一样的结果。
 ```js
@@ -398,9 +400,9 @@ console.log(move({x: 3})); // [3, undefined]
 console.log(move({})); // [undefined, undefined]
 console.log(move()); // [0, 0]
 ```
-上面的例子是为函数move的参数指定默认值，而不是为变量x和y指定默认值，所以会得到与前一种写法不同的结果。
+上面的例子是为函数`move`的参数指定默认值，而不是为变量`x`和`y`指定默认值，所以会得到与前一种写法不同的结果。
 
-undefined就会触发函数参数的默认值。
+`undefined`就会触发函数参数的默认值。
 ```js
 const arr = [1, undefined, 3].map((x = 'yes') => x);
 console.log(arr); // [1, "yes", 3]
@@ -438,7 +440,6 @@ function f([z, (x)]) { return x; }
 ```
 上面的代码将整个模式放在圆括号之中，导致报错。
 
-
 ```js
 // 报错
 [({ p: a }), { x: c }] = [{}, {}];
@@ -458,7 +459,7 @@ console.log(d); // 4
 [(parseInt.prop)] = [3];
 console.log(parseInt.prop); // 3
 ```
-上面的3行语句都可以正确执行，因为它们都是赋值语句，并不是声明语句。而且它们的圆括号都不属于模式的一部分。第1行语句中，模式是取数组的第1个成员，跟圆括号无关；第2行语句中，模式是p而不是d；第3行语句与第1行语句的性质一致。
+上面的3行语句都可以正确执行，因为它们都是赋值语句，并不是声明语句。而且它们的圆括号都不属于模式的一部分。第1行语句中，模式是取数组的第1个成员，跟圆括号无关；第2行语句中，模式是`p`而不是d；第3行语句与第1行语句的性质一致。
 
 
 ## 用途
@@ -472,7 +473,7 @@ let y = 2;
 [x, y] = [y, x];
 console.log(`x的值是${x}`, `y的值是${y}`); // x的值是2 y的值是1
 ```
-上面的代码交换变量x和y的值，这种写法不仅简洁，而且易读，语义非常清晰。
+上面的代码交换变量`x`和`y`的值，这种写法不仅简洁，而且易读，语义非常清晰。
 
 #### 从函数返回多个值
 函数只能返回一个值，如果要返回多个值，只能将它们放在数组或对象里面当作返回值，然后使用解构赋值，这样取出这些值就很方便了。
@@ -518,9 +519,9 @@ function b({x, y, z}) {
 // 参数是一组无次序的值
 b({z: 3, y: 2, x: 1});
 ```
+
 #### 提取JSON数据
-解构赋值用来提取JSON对象中的数据是非常有用的。我们在日常开发中，对后端同学返回给我们的数据用解构
-赋值做处理，方便很多了。
+解构赋值用来提取`JSON`对象中的数据是非常有用的。我们在日常开发中，对后端同学返回给我们的数据用解构赋值做处理，方便很多了。
 ```js
 let jsonData = {
   id: 42,
@@ -533,10 +534,10 @@ console.log(id); // 42
 console.log(status); // OK
 console.log(data); // [867, 5309]
 ```
-上面就是使用解构赋值快速提取JSON数据的值。只要属性正确就可以提取，不用考虑顺序。
+上面就是使用解构赋值快速提取`JSON`数据的值。只要属性正确就可以提取，不用考虑顺序。
 
 #### 遍历Map结构
-任何部署了Iterator接口的对象都可以用for...of循环遍历。Map结构原生支持Iterator接口，配合变量的解构赋值获取键名和键值就非常方便。
+任何部署了`Iterator`接口的对象都可以用`for...of`循环遍历。`Map`结构原生支持`Iterator`接口，配合变量的解构赋值获取键名和键值就非常方便。
 ```js
 var map = new Map();
 map.set('first', 'hello');
