@@ -377,7 +377,7 @@ console.log(ArrayOf()); // []
 console.log(ArrayOf(1, 2)); // [1, 2]
 ```
 
-## 数组copyWithin()方法
+## copyWithin()
 数组实例的`copyWithin()`方法，在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有的成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。
 ```js
 Array.prototype.copyWithin(target, start = 0, end = this.length);
@@ -401,7 +401,7 @@ console.log([1, 2, 3, 4, 5].copyWithin(0, -2)); // [4, 5, 3, 4, 5]
 console.log([1, 2, 3, 4, 5].copyWithin(0, -2, -1)); // [4, 2, 3, 4, 5]
 ```
 
-## 数组find()和findIndex()方法
+## find()和findIndex()
 数组实例的`find`方法，用于找出第一个符合条件的数组成员。它的参数是一个回调函数，所有数组成员依次执行该回调函数，直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回`undefined`。
 ```js
 console.log([1, 4, -5, 10].find((n) => n < 0)); // -5
@@ -447,7 +447,7 @@ console.log([NaN].findIndex(y => Object.is(NaN, y))); // 0
 ```
 上面的代码中，`indexOf`方法无法识别数组的NaN成员，但是`findIndex`方法可以借助`Object.is`方法做到。
 
-## 数组fill()方法
+## fill()
 `fill`方法使用给定的值，填充一个数组。
 ```js
 const arr = ['a', 'b', 'c'];
@@ -475,3 +475,203 @@ let arr2 = new Array(3).fill([]);
 arr2[0].push(5);
 console.log(arr2); // [[5], [5], [5]]
 ```
+
+## entries(), keys()和values()。
+ES6提供了三个新方法--`entries()`、`keys()`、`values()`--用来遍历数组。三个方法都返回一个遍历对象（`Inerator`），也可以用`for...of`循环进行遍历，它们的区别在于`keys()`是对键名的遍历，`values()`是对键值的遍历，`entries()`是对键值对的遍历。
+```js
+let arr = ['xiaohong', 'xiaoming', 'xiaohuang'];
+for (let idx of arr.keys() ) {
+  console.log(idx);
+  // 0
+  // 1
+  // 2
+}
+
+for (let elem of arr.values()) {
+  console.log(elem);
+  // xiaohong
+  // xiaoming
+  // xiaohuang
+}
+
+for (let [idx, elem] of arr.entries()) {
+  console.log(idx, elem);
+  // 0 "xiaohong"
+  // 1 "xiaoming"
+  // 2 "xiaohuang"
+}
+```
+如果不使用`for...of`的话，可以手动使用遍历器对象的`next()`方法进行遍历。但是我觉得这种方法其实挺少用的。看下面的例子：
+```js
+let arr = ['xiaohong', 'xiaoming', 'xiaohuang'];
+let entries = arr.entries();
+console.log(entries.next().value); // [0, "xiaohong"]
+console.log(entries.next().value); // [1, "xiaoming"]
+console.log(entries.next().value); // [2, "xiaohuang"]
+```
+
+## includes()
+`includes()`方法是返回一个布尔值，表示数组中是否包含有给定的值。
+```js
+const arr = ["java", "javascript", "Rudy", "C", "C++", "C#"];
+
+console.log(arr.includes("Rudy")); // true
+```
+`includes()`方法的第二个参数表示搜索的开始位置，默认是`0`。如果第二个参数是负数的话，则表示倒数的位置，如果它大于数组的长度（例如：第二个参数为`-4`，但数组长度为`3`的时候），会重置为从`0`开始。
+```js
+const arr = ["java", "javascript", "Rudy", "C", "C++", "C#"];
+
+console.log(arr.includes("C", 6)); // false
+console.log(arr.includes("C#", -1)); // true
+console.log(arr.includes("javascript", -7)); // true
+```
+在没有这个方法之前，我们一般都是通过使用数组的`indexOf()`方法，检查数组里是否包含某个值。
+```js
+const arr = ["java", "javascript", "Rudy", "C", "C++", "C#"];
+
+if (arr.indexOf("javascript") !== -1) {
+  console.log("数组里面有你想要检索的值");
+}
+```
+但是`indexOf()`方法有两个缺点，一是不够语义化，它的含义是找到参数值的第一个出现的位置，所以要比较是否不等于`-1`，二是，它内部使用严格相等运算符（`===`）进行判断的话，会导致`NaN`的误判。
+```js
+console.log([NaN].indexOf(NaN)); // -1
+```
+`includes`使用的是一样的判断算法，就没有问题了。
+```js
+console.log([NaN].includes(NaN)); // true
+```
+
+## flat()，flatMap()
+当数组的成员还是一个数组的时候，`flat()`用于嵌套的数组"拉平"，变成一个一维数组，`flat()`方法返回一个新数组，对原数组没有影响。
+```js
+const arr = [1, 2, [3, 4]];
+console.log(arr.flat()); // [1, 2, 3, 4]
+```
+上面的代码中，原数组的成员里有一个数组，`flat()`方法将子数组的成员取出来，添加在原来的位置。
+
+`flat()`支持接受参数，如果想要"拉平"多层的嵌套数组，可以传一个整数作为参数，表示想要拉平的层数，默认是1。
+```js
+const arr = [1, 2, [3, 4], [[5, 6]]];
+console.log(arr.flat(2)); // [1, 2, 3, 4, 5, 6]
+```
+上面的代码中，`flat()`传了一个`2`为参数，表示要拉平两层的嵌套数组。
+
+当数组不管有多少层嵌套，都要转成一维数组时，可以使用`Infinity`关键字作为参数。
+```js
+const arr = [1, 2, [3, 4], [[5, [6]], [[[[7]]]]]];
+console.log(arr.flat(Infinity)); // [1, 2, 3, 4, 5, 6]
+```
+
+如果说原数组有空位的话，`flat()`方法会跳过空位。
+```js
+const arr = [1, 2, ,[3, 4], ,];
+console.log(arr.flat(Infinity)); // [1, 2, 3, 4]
+```
+
+`flatMap()`方法对原数组的每一个成员执行一个函数（就相当于`map()`方法），然后对返回值组成的数组执行`flat()`方法。`flatMap()`方法也是返回一个新数组，不会改变原数组。
+```js
+const arr = [2, 4, 6, 8];
+console.log(arr.flatMap(x => [x, x * 2])) // [2, 4, 4, 8, 6, 12, 8, 16]
+```
+上面的代码就相当于[[2, 4], [4, 8], [6, 12], [8, 16]].flat()。
+
+`flatMap()`只能展开一层数组。
+```js
+const arr = [1, 2, 3, 4];
+console.log(arr.flatMap((x) => [[x * 2]])); // [[2], [4], [6], [8]]
+```
+上面的代码中，遍历函数返回的是一个双层的数组，注意，默认只展开一层，因此`flatMap()`返回的还是一个嵌套数组。
+
+`flatMap()`方法的参数是一个遍历函数，这个函数可以接受三个参数，分别是当前数组成员、当前数组成员的位置（从零开始）、原数组。
+```js
+const arr1 = [1, 2, 3, 4];
+const arr2 = [5, 6]
+console.log(arr1.flatMap((x) => ( arr2.map(o => [x, o]) )));
+// [[1, 5], [1, 6], [2, 5], [2, 6], [3, 5], [3, 6], [4, 5], [4, 6]]
+```
+`flatMap()`方法还支持传第二个参数，用来绑定遍历函数里面的`this`。
+
+## 数组空位问题
+数组的空位指的是，数组的某一个位置没有任何值，例如：`Array`构造函数返回的数组都是空位。
+```js
+const arr = new Array(3);
+console.log(arr);
+```
+上面的代码中，`Array(3)`返回一个具有3个空位的数组。
+
+需要注意的是，空位不是`undefined`，一个位置的值等于`undefined`，依然有值的。空位是没有任何值，`in`运算符就可以说明这一点。
+```js
+console.log(0 in [undefined, undefined, undefined]); // true
+console.log(0 in [, , ,]); // false
+```
+上面的代码中，说明第一个数组的0号位是有值的，第二个数组的0号位没有值。
+
+ES5中的数组方法中，大多数情况都是会忽略空位的。
+`forEach()`，`filter()`，`reduce()`，`every()`，`some()`都是会跳过空位的。
+`map()`会跳过空位，但会保留这个值。
+`join()`和`toString()`会把空位是为`undefined`，而`undefined`和null会被处理成空字符串。
+
+```js
+[, 'a'].forEach((x, i) => console.log(i)); // 1
+
+// filter方法
+console.log(['a', , 'b'].filter(x => true)); // ["a", "b"]
+
+// every方法
+console.log([, 'a'].every(x => x === 'a')); // true
+
+// reduce方法
+console.log([1, , 2].reduce((x, y) => x+y)); // 3
+
+// some方法
+console.log([, 'a'].some(x => x !== 'a')); // false
+
+// map方法
+console.log([, 'a'].map(x => 1)); // [empty, 1]
+
+// join方法
+console.log([, 'a', undefined, null].join('#')); // #a##
+
+// toString方法
+console.log([, 'a', undefined, null].toString()); // ,a,,
+```
+
+但是ES6新增的数组方法对空位处理有所不同。
+`Array.form`方法会将数组的空位转为`undefined`，也就是说，这个方法不会忽略掉空位，而是把空位转为`undefined`。
+```js
+console.log(Array.from(['a',,'b',,])); // ["a", undefined, "b", undefined]
+```
+扩展运算符（`...`）也会把空位转为`undefined`。
+```js
+console.log([...['a',,'b']]); // ["a", undefined, "b"]
+```
+`copyWithin()`会连空位一起拷贝。
+```js
+console.log([,'a',,'b'].copyWithin(2, 0)); // [empty, "a", empty, "a"]
+```
+`fill()`会将空位视为正常的数组位置。
+```js
+console.log(new Array(3).fill('a')); // ["a", "a", "a"]
+```
+
+`for...of`循环也会遍历空位。
+```js
+let arr = [,,];
+for (let i of arr) {
+  console.log(1);
+}
+// 1
+// 1
+```
+上面代码中，数组`arr`有两个空位，`for...of`并没有忽略掉它们。如果改成`map`方法遍历的话，空位是会被跳过的。
+
+`entries()`、`keys()`、`values()`、`find()`、`findIndex()`都会把空位处理成`undefined`。
+```js
+console.log([...[,'a'].entries()]); //  [[0, undefined], [1, "a"]]
+console.log([...[, 'a'].keys()]); // [0, 1]
+console.log([...[, 'a'].values()]); // [undefined, "a"]
+console.log([, 'a'].find(x => true)); // undefined
+console.log([, 'a'].findIndex(x => true)); // 0
+```
+可以看到数组的每个方法处理空位规则非常不统一，所以建议大家避免数组出现空位的情况。
