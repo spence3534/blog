@@ -44,8 +44,7 @@ JSON表示上述对象的方式如下：
   "age": 21
 }
 ```
-JSON对象有两个地方不一样。首先，没有声明变量。其次，没有末尾的分号。对象的属性必须加双引号，
-这在JSON中是必需的。属性的值可以是简单值，也可以是复杂类型值，因此可以像下面这样在对象中嵌入对象：
+JSON对象有两个地方不一样。首先，没有声明变量。其次，没有末尾的分号。对象的属性必须加双引号，这在JSON中是必需的。属性的值可以是简单值，也可以是复杂类型值，因此可以像下面这样在对象中嵌入对象：
 ```json
 {
   "name": "xiaoli",
@@ -56,12 +55,10 @@ JSON对象有两个地方不一样。首先，没有声明变量。其次，没�
   }
 }
 ```
-与JavaScript不同，JSON中对象的属性名任何时候都必须加引号。手工编写JSON时，忘了给对象属性名加双引
-号或者把双引号写成单引号都是常见的错误。
+与JavaScript不同，JSON中对象的属性名任何时候都必须加引号。手工编写JSON时，忘了给对象属性名加双引号或者把双引号写成单引号都是常见的错误。
 
 ### 数组
-JSON中的第二种复杂数据类型是数组。JSON数组采用的就是JavaScript中的数组字面量形式。下面是
-JavaScript中的数组字面量：
+JSON中的第二种复杂数据类型是数组。JSON数组采用的就是JavaScript中的数组字面量形式。下面是JavaScript中的数组字面量：
 ```js
 var values = [25, "hi", true];
 ```
@@ -117,8 +114,7 @@ console.log(jsonText);
 ```
 默认情况下，JSON.stringify()输出的JSON字符串不包含任何空格字符串或缩进。
 
-在序列化JavaScript对象时，所有函数及原型成员都会被有意忽略，不体现在结果中。值为undefined的
-任何属性也都会被跳过，结果中最终都是值为有效JSON数据类型的实例属性。
+在序列化JavaScript对象时，所有函数及原型成员都会被有意忽略，不体现在结果中。值为undefined的任何属性也都会被跳过，结果中最终都是值为有效JSON数据类型的实例属性。
 
 将JSON字符串直接传递给 **JSON.parse()** 就可以得到相应的JavaScript值，就拿上面的变量jsonText来说：
 ```js
@@ -130,12 +126,10 @@ console.log(bookCopy); // 打印出一个json数据
 如果传给JSON.parse()的字符串不是有效的JSON，该方法会抛出错误。
 
 ### 序列化选项
-JSON.stringify()除了要序列化的JavaScript对象外，还可以接收另外两个参数，这两个参数用于指定以不同的
-方式序列化JavaScript对象。第一个参数是个过滤器，可以是一个数组，也可以是一个函数；第二个参数是一个选
-项，表示是否在JSON字符串中保留缩进。单独或组合使用这两个参数，可以更全面深入地控制JSON的序列化。
+`JSON.stringify()`除了要序列化的JavaScript对象外，还可以接收另外两个参数，这两个参数用于指定以不同的方式序列化JavaScript对象。第一个参数是个过滤器，可以是一个数组，也可以是一个函数；第二个参数是一个选项，表示是否在JSON字符串中保留缩进。单独或组合使用这两个参数，可以更全面深入地控制JSON的序列化。
 
 #### 过滤结果
-如果过滤器参数是个数组，那么 **JSON.stringify()** 的结果中将只包含数组中列出的属性。来看下面的例子：
+如果过滤器参数是个数组，那么`JSON.stringify()`的结果中将只包含数组中列出的属性。来看下面的例子：
 ```js
 var book = {
   "title": "Professional JavaScript",
@@ -151,12 +145,9 @@ var jsonText = JSON.stringify(book, ["title", "edition"]);
 console.log(jsonText);
 // 返回的结果字符串，只会包含这两个属性{"title":"Professional JavaScript","edition":3}
 ```
-如果第二个参数是函数，行为会稍有不同。传入的函数接收两个参数，属性（键）名和属性值。根据属性（键）
-名可以知道应该如何处理要序列化的对象中的属性。属性名只能是字符串，而在值并非键值对儿结构的值时，键
-名可以是空字符串。
+如果第二个参数是函数，行为会稍有不同。传入的函数接收两个参数，属性（键）名和属性值。根据属性（键）名可以知道应该如何处理要序列化的对象中的属性。属性名只能是字符串，而在值并非键值对儿结构的值时，键名可以是空字符串。
 
-为了改变序列化对象的结果，函数返回的值就是相应键的值。不过要注意，如果函数返回了undefined，那么相
-应的属性会被忽略。来看一个例子：
+为了改变序列化对象的结果，函数返回的值就是相应键的值。不过要注意，如果函数返回了undefined，那么相应的属性会被忽略。来看一个例子：
 ```js
 var book = {
   "title": "Professional JavaScript",
@@ -184,11 +175,10 @@ console.log(jsonText);
 // 序列化后的JSON字符串结果 {"title":"Professional JavaScript","authors":"Nicholas C. Zakas","edition":3,"year":5000}
 ```
 要序列化的对象中的每一个对象都要经过过滤器，因此数组中的每个带有这些属性的对象经过过滤之后，每个对象
-都只会包含"title"、"authors"和"year"属性。
+都只会包含`title`、"authors`和`year`属性。
 
 #### 字符串缩进
-**JSON.stringify()** 方法的第三个参数用于控制结果中的缩进和空白符。如果这个参数是一个数值，那它表示
-的是每个级别缩进的空格数。例如，要在每个级别缩进4个空格，可以这样写代码：
+`JSON.stringify()`方法的第三个参数用于控制结果中的缩进和空白符。如果这个参数是一个数值，那它表示的是每个级别缩进的空格数。例如，要在每个级别缩进4个空格，可以这样写代码：
 ```js
 var book = {
   "title": "Professional JavaScript",
@@ -201,7 +191,7 @@ var book = {
 
 var jsonText = JSON.stringify(book, null, 4);
 ```
-保存在jsonText中的字符串如下所示：
+保存在`jsonText`中的字符串如下所示：
 ```json
 {
     "title": "Professional JavaScript",
@@ -214,8 +204,7 @@ var jsonText = JSON.stringify(book, null, 4);
 ```
 最大缩进空格数为10，所有大于10的值都会自动转换为10。
 
-如果缩进参数是一个字符串而非数值，则这个字符串将在JSON字符串中被用作缩进字符（不再用空格）。
-在使用字符串的情况下，可以将缩进字符设置为制表符，或者两个短划线之类的任意字符。
+如果缩进参数是一个字符串而非数值，则这个字符串将在JSON字符串中被用作缩进字符（不再用空格）。在使用字符串的情况下，可以将缩进字符设置为制表符，或者两个短划线之类的任意字符。
 ```js
 var jsonText = JSON.stringify(book, null, "- -");
 ```
@@ -233,9 +222,7 @@ var jsonText = JSON.stringify(book, null, "- -");
 缩进字符串最长不能超过10个字符长。如果字符串长度超过了10个，结果中将只出现前10个字符。
 
 #### toJSON()方法
-有时候，JSON.stringify()还是不能满足对某些对象进行自定义序列化的需求。可以给对象定义 **toJSON()** 
-方法，返回其自身的JSON数据格式。原生Date对象有一个toJSON()方法，能够将JavaScript的Date对象自动
-转换成ISO 8601日期字符串（与在Date对象上调用toISOString()的结果完全一样）。
+有时候，`JSON.stringify()`还是不能满足对某些对象进行自定义序列化的需求。可以给对象定义`toJSON()`方法，返回其自身的JSON数据格式。原生Date对象有一个toJSON()方法，能够将JavaScript的`Date`对象自动转换成ISO 8601日期字符串（与在`Date`对象上调用`toISOString()`的结果完全一样）。
 
 可以为任何对象添加toJSON()方法，比如：
 ```js
@@ -255,24 +242,20 @@ var jsonText = JSON.stringify(book);
 
 console.log(jsonText); // "Professional JavaScript"
 ```
-以上代码在book对象上定义了一个toJSON()方法，该方法返回图书的书名。
+以上代码在`book`对象上定义了一个`toJSON()`方法，该方法返回图书的书名。
 
-**toJSON()** 可以作为函数过滤器的补充，因此理解序列化的内部顺序十分重要。假设把一个对象传入
-**JSON.stringify()**，序列化该对象的顺序如下。
-1. 如果存在toJSON()方法而且能通过它取得有效的值，则调用该方法。否则，返回对象本身。
+`toJSON()`可以作为函数过滤器的补充，因此理解序列化的内部顺序十分重要。假设把一个对象传入`JSON.stringify()`，序列化该对象的顺序如下。
+1. 如果存在`toJSON()`方法而且能通过它取得有效的值，则调用该方法。否则，返回对象本身。
 2. 如果提供了第二个参数，应用这个函数过滤器。传入函数过滤器的值是第1步返回的值。
 3. 对第2步返回的每个值进行相应的序列化。
 4. 如果提供了第三个参数，执行相应的格式化。
 
-无论是考虑定义toJSON()方法，还是考虑使用函数过滤器，亦或需要同时使用两者，理解这个顺序是至关重要的。
+无论是考虑定义`toJSON()`方法，还是考虑使用函数过滤器，亦或需要同时使用两者，理解这个顺序是至关重要的。
 
 ### 解析选项
-**JSON.parse()** 方法也可以接受另一个参数，该参数是一个函数，将在每个键值对上调用。为了区别
-JSON.stringify()接收的替换（过滤）函数（replacer），这个函数被称为还原函数（reviver），但实际上
-这两个函数的签名是相同的————它们都接收两个参数，一个键和一个值，而且都需要返回一个值。
+`JSON.parse()`方法也可以接受另一个参数，该参数是一个函数，将在每个键值对上调用。为了区别`JSON.stringify()`接收的替换（过滤）函数（replacer），这个函数被称为还原函数（`reviver`），但实际上这两个函数的签名是相同的————它们都接收两个参数，一个键和一个值，而且都需要返回一个值。
 
-如果还原函数返回undefined，则表示要从结果中删除相应的键；如果返回其他的值，则将该值插入到结果中。在
-将日期字符串转换为Date对象时，经常要用到还原函数。例如：
+如果还原函数返回`undefined`，则表示要从结果中删除相应的键；如果返回其他的值，则将该值插入到结果中。在将日期字符串转换为`Date`对象时，经常要用到还原函数。例如：
 ```js
 var book = {
   "title": "Professional JavaScript",
@@ -297,4 +280,4 @@ var bookCopy = JSON.parse(jsonText, function(key, value){
 
 console.log(bookCopy.releaseDate.getFullYear()); // 2011
 ```
-以上代码先是为book对象新增了一个releaseData属性，该属性保存着一个Date对象。该属性保存着一个Date对象。这个对象在经过序列化之后变成了有效的JSON字符串，然后经过解析又在bookCopy中还原为一个Date对象。还原函数在遇到"releaseDate"键时，会基于相应的值创建一个新的Date对象。结果就是bookCopy.releaseDate属性中会保存一个Date对象。正因为如此，才能基于这个对象调用getFullYear()方法。
+以上代码先是为`book`对象新增了一个`releaseData`属性，该属性保存着一个`Date`对象。该属性保存着一个`Date`对象。这个对象在经过序列化之后变成了有效的`JSON`字符串，然后经过解析又在`bookCopy`中还原为一个`Date`对象。还原函数在遇到`releaseDate`键时，会基于相应的值创建一个新的`Date`对象。结果就是`bookCopy.releaseDate`属性中会保存一个`Date`对象。正因为如此，才能基于这个对象调用`getFullYear()`方法。
