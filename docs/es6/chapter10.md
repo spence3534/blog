@@ -226,7 +226,7 @@ processContent({ url: { port: 8000 } });
 上面的例子中，是想把`url.port`改成8000，`url.host`不变，结果却把`options.url`覆盖掉了`DEFAULTS.url`，所以`url.host`不存在了。
 
 ## Object.getOwnPropertyDescriptors()
-`Object.getOwnPropertyDescriptors()`方法返回指定对象所有自身（非继承属性）属性的描述。而在ES5中有一个`Object.getOwnPropertyDescriptor()`方法用于返回某个对象属性的描述对象。 通俗点说，前者是用来查看某个对象的所有属性的描述，而后者是查看某个对象里面的某个属性的描述。来看个例子：
+`Object.getOwnPropertyDescriptors()`方法返回指定对象自身所有（非继承属性）属性的描述。而在ES5中有一个`Object.getOwnPropertyDescriptor()`方法用于返回某个对象属性的描述对象。 通俗点说，前者是用来查看某个对象的所有属性的描述，而后者是查看某个对象里面的某个属性的描述。来看个例子：
 ```js
 const obj = {
   foo: 123,
@@ -427,7 +427,7 @@ console.log(Object.getPrototypeOf(true) === Boolean.prototype); // true
 ```
 
 ## Object.values()
-`Object.values()`方法返回一个数组。成员是参数对象自身的所有可遍历属性的键值，但是不包含可继承属性。
+`Object.values()`方法返回一个数组。成员是参数对象自身的所有可遍历属性的键值，但是不包含继承属性。
 ```js
 const obj = { foo: 'bar', baz: 42 };
 console.log(Object.values(obj)); // ["bar", 42]
