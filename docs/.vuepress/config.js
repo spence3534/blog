@@ -56,7 +56,7 @@ module.exports = {
           'chapter7',
           'chapter8',
           'chapter9',
-          'chapter10'
+          /* 'chapter10' */
         ]
       }],
       sidebarDepth: 0,
