@@ -8,4 +8,5 @@ sidebarDepth: 3
 [字符串扩展](./chapter4.md)  
 [函数的扩展](./chapter7.md)  
 [数组的扩展](./chapter8.md)  
-[对象的扩展](./chapter9.md) 
+[对象的扩展](./chapter9.md)  
+[对象的新增方法](./chapter10.md) 
