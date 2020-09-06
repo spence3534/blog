@@ -9,3 +9,4 @@ sidebarDepth: 3
 [函数的扩展](./chapter7.md)  
 [数组的扩展](./chapter8.md)  
 [对象的扩展和新增方法](./chapter9.md)  
+[Symbol](./chapter10.md)  
