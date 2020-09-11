@@ -11,3 +11,4 @@ sidebarDepth: 3
 [对象的扩展和新增方法](./chapter9.md)  
 [Symbol](./chapter10.md)  
 [Set和Map数据结构](./chapter11.md)  
+[Proxy](./chapter12.md)  
