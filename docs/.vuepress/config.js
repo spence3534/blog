@@ -58,10 +58,11 @@ module.exports = {
           'chapter9',
           'chapter10',
           'chapter11',
-          'chapter12'
+          'chapter12',
+          'chapter13'
         ]
       }],
-      sidebarDepth: 0,
+      sidebarDepth: 3,
     }
   }
 }
