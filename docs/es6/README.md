@@ -12,3 +12,5 @@ sidebarDepth: 3
 [Symbol](./chapter10.md)  
 [Set和Map数据结构](./chapter11.md)  
 [Proxy](./chapter12.md)  
+[Reflect](./chapter13.md)  
+[Promise对象](./chapter14.md)  
