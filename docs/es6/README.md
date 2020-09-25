@@ -14,3 +14,5 @@ sidebarDepth: 3
 [Proxy](./chapter12.md)  
 [Reflect](./chapter13.md)  
 [Promise对象](./chapter14.md)  
+[Iterator和for...of循环](./chapter15.md)  
+[Generator函数的语法](./chapter16.md)  
