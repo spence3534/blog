@@ -6,7 +6,7 @@
 
 ### 安全的类型检测
 
-在任何值上调用Object原生的toString()方法，都会返回一个[object NativeConstructorName]格式的字符串。每个类的内部都有一个[[Class]]属性，这个属性中就指定了上述字符串的构造函数名。举个例子：
+在任何值上调用`Object`原生的`toString()`方法，都会返回一个`[object NativeConstructorName]`格式的字符串。每个类的内部都有一个`[[Class]]`属性，这个属性中就指定了上述字符串的构造函数名。举个例子：
 ```js
 var arr = [];
 var txt = "xiaohong";
@@ -15,7 +15,7 @@ console.log(Object.prototype.toString.call(arr)); // [object Array]
 console.log(Object.prototype.toString.call(txt)); // [object String]
 ```
 
-由于原生数组的构造函数名与全局作用域无关，因此使用toString()就能保证返回一致的值。利用这一点，可以创建如下函数：
+由于原生数组的构造函数名与全局作用域无关，因此使用`toString()`就能保证返回一致的值。利用这一点，可以创建如下函数：
 ```js
 function isArray(value) {
   return Object.prototype.toString.call(value);
@@ -31,13 +31,13 @@ function isRegExp(value) {
   return Object.prototype.toString.call(value) == "[object RegExp]";
 }
 ```
-这一技巧也广泛应用于检测原生JSON对象，Object的toString()方法不能检测非原生构造函数的构造函数名。因此，开发人员定义的任何构造函数都将返回[object Object]。
+这一技巧也广泛应用于检测原生JSON对象，`Object`的`toString()`方法不能检测非原生构造函数的构造函数名。因此，开发人员定义的任何构造函数都将返回[object Object]。
 :::warning
 请注意，Object.prototype.toString()本身也可能会被修改。
 :::
 
 ### 作用域安全的构造函数
-构造函数其实就是一个使用new操作符调用的函数。当使用new调用时，构造函数内用到的this对象会指向新创建的对象实例，如下面的例子所示：
+构造函数其实就是一个使用new操作符调用的函数。当使用`new`调用时，构造函数内用到的`this`对象会指向新创建的对象实例，如下面的例子所示：
 ```js
 function Person(name, age, job) {
   this.name = name;
@@ -47,7 +47,7 @@ function Person(name, age, job) {
 
 var person = new Person("xiaohong", 19, "Front end Engineer");
 ```
-上面这个例子中，Person构造函数使用this对象给三个属性赋值：name、age和job。当和new操作符连用时，则会创建一个新的Person对象，同时会给它分配这些属性。问题出在当没有使用new操作符来调用该构造函数的情况上。由于该this对象是在运行时绑定的，所以直接调用Person()，this会映射到全局对象window上，导致错误对象属性的意外增加。例如：
+上面这个例子中，`Person`构造函数使用`this`对象给三个属性赋值：`name、age`和`job`。当和`new`操作符连用时，则会创建一个新的`Person`对象，同时会给它分配这些属性。问题出在当没有使用`new`操作符来调用该构造函数的情况上。由于该this对象是在运行时绑定的，所以直接调用`Person()`，`this`会映射到全局对象`window`上，导致错误对象属性的意外增加。例如：
 ```js
 var person = Person("xiaohong", 22, "Front end Engineer");
 
