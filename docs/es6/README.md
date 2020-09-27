@@ -17,3 +17,4 @@ sidebarDepth: 3
 [Iterator和for...of循环](./chapter15.md)  
 [Generator函数的语法](./chapter16.md)  
 [Generator函数的异步应用](./chapter17.md)  
+[async函数](./chapter18.md)  
