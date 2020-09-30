@@ -491,3 +491,121 @@ const a = async () => {
 }
 ```
 上面的代码中，`b()`运行的时候，`a()`是暂停执行，上下文环境都保存着。一旦`b()`或`c()`报错，错误堆栈将包括`a()`。
+
+## async函数的实现原理
+async函数的实现原理就是把Generator函数和自动执行器，包装在一个函数里面。
+```js
+async function fn(args) {
+  // ...
+};
+
+// 等同于
+function fn(args) {
+  return spawn(function* () {
+    // ...
+  })
+};
+```
+所有的`async`函数都可以写成上面的第二种形式，其中的`spawn`函数就是自动执行器。
+
+下面是`spawn`函数的实现以及使用方法。
+```js
+function spawn(genF) {
+  return new Promise((resolve, reject) => {
+    const gen = genF();
+
+    function step(nextF) {
+      let next;
+      try {
+        next = nextF();
+      } catch (e) {
+        return reject(e);
+      }
+
+      if (next.done) {
+        return resolve(next.value);
+      }
+
+      Promise.resolve(next.value).then((value) => {
+        step(() => gen.next(value));
+      }, () => {
+        step(() => gen.throw(e));
+      })
+    }
+    step(() => gen.next(undefined));
+  })
+}
+
+function fn(args) {
+  return spawn(function* () {
+    let nums = [1, 2, 3, 4, 5];
+    console.log('进入', nums.concat(args));
+  });
+};
+
+fn([6, 7, 8]);
+// 进入 (8) [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+## 实例：按顺序完成异步操作
+在实际开发中，经常遇到一组异步操作，需要按照顺序完成。比如，依次远程读取一组URL，然后按照读取的顺序输出结果。
+
+下面是Promise的写法。
+```js
+function logInOrder(urls) {
+  // 远程读取所有URL
+  const textPromises = urls.map(url => {
+    return fetch(url).then(res => res.text());
+  });
+
+  // 按次序输出
+  textPromises.reduce((chain, textPromise) => {
+    return chain.then(() => textPromise)
+      .then(text => console.log(text));
+  }, Promise.resolve());
+}
+const urls = [
+  'https://www.easy-mock.com/mock/5c3202882188f1589db6ae9d/example/mock', 
+  'https://www.easy-mock.com/mock/5c3202882188f1589db6ae9d/example/query'
+];
+logInOrder(urls);
+```
+上面代码中使用`fetch`方法，同时远程读取一组URL。每个`fetch`操作都返回一个Promise对象，放进`textPromise`数组里。然后，`reduce`依次处理每个Promise对象，然后使用`then`，把所有Promise对象连起来，因此就可以依次输出结果。
+
+但是这种写法不太直观，可读性比较差，使用async函数改造一下。
+```js
+async function logInOrder(urls) {
+  for (const url of urls) {
+    const response = await fetch(url);
+    console.log(await response.text());
+  }
+}
+
+const urls = [
+  'https://www.easy-mock.com/mock/5c3202882188f1589db6ae9d/example/mock', 
+  'https://www.easy-mock.com/mock/5c3202882188f1589db6ae9d/example/query'
+];
+logInOrder(urls);
+```
+上面代码大大简化了，但是所有远程操作都是继发的，只有前一个URL返回结果了，才会去读取下一个URL，这样效率就会很低，浪费时间。而我们需要的是并发发出请求。
+```js
+async function logInOrder(urls) {
+  // 并发读取远程URL
+  const textPromises = urls.map(async (url) => {
+    const response = await fetch(url);
+    return response.text();
+  });
+
+  for (let textPromise of textPromises) {
+    console.log(await textPromise);
+  }
+}
+
+const urls = [
+  'https://www.easy-mock.com/mock/5c3202882188f1589db6ae9d/example/mock', 
+  'https://www.easy-mock.com/mock/5c3202882188f1589db6ae9d/example/query'
+];
+
+logInOrder(urls);
+```
+上面的代码中，虽然`map`方法的参数是`async`函数，但它是并发执行的，因为只有`async`函数内部是继发执行，外部不受影响。后面的`for...of`循环内部使用了`await`，因此实现了按顺序输出。
