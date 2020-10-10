@@ -18,3 +18,4 @@ sidebarDepth: 3
 [Generator函数的语法](./chapter16.md)  
 [Generator函数的异步应用](./chapter17.md)  
 [async函数](./chapter18.md)  
+[Class的基本语法](./chapter19.md)  
