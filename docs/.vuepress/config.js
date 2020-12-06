@@ -1,16 +1,18 @@
 module.exports = {
-  title:'写前端的图图',
+  title: '写前端的图图',
   description: 'Hello, welcome to 写前端的图图 blog',
-  base:'/',
+  base: '/',
   dest: './dist',
   head: [
-    ['link',{rel: 'icon', href: '/image/login.jpg'}]
+    ['link', {
+      rel: 'icon',
+      href: '/image/login.jpg'
+    }]
   ],
-  themeConfig:{
-    nav:[
-      {
+  themeConfig: {
+    nav: [{
         text: '主页',
-        link:'/'
+        link: '/'
       },
       {
         text: 'JavaScript',
@@ -19,33 +21,34 @@ module.exports = {
       {
         text: 'ECMAScript6',
         link: '/es6/'
+      }, {
+        text: '数据结构与算法',
+        link: '/DataStructures-Algorithms/'
       }
     ],
-    sidebar:{
-      '/javascript/': [
-        {
-          title: 'JavaScript',
-          collapsable: false,
-          children: [
-            'Chapter3',
-            'Chapter4',
-            'Chapter5',
-            'Chapter6',
-            'Chapter7',
-            'Chapter8',
-            'Chapter10',
-            'Chapter11',
-            'Chapter12',
-            'Chapter13',
-            'Chapter14',
-            'Chapter15',
-            'Chapter16',
-            'Chapter20',
-            'Chapter21',
-            'Chapter22'
-          ]
-        }
-      ],
+    sidebar: {
+      '/javascript/': [{
+        title: 'JavaScript',
+        collapsable: false,
+        children: [
+          'Chapter3',
+          'Chapter4',
+          'Chapter5',
+          'Chapter6',
+          'Chapter7',
+          'Chapter8',
+          'Chapter10',
+          'Chapter11',
+          'Chapter12',
+          'Chapter13',
+          'Chapter14',
+          'Chapter15',
+          'Chapter16',
+          'Chapter20',
+          'Chapter21',
+          'Chapter22'
+        ]
+      }],
       '/es6/': [{
         title: 'ECMAScript6',
         collapsable: false,
@@ -67,6 +70,13 @@ module.exports = {
           'chapter18',
           'chapter19',
           'chapter20',
+        ]
+      }],
+      '/DataStructures-Algorithms/': [{
+        title: '数据结构与算法',
+        collapsable: false,
+        children: [
+          'chapter3',
         ]
       }],
       sidebarDepth: 3,
