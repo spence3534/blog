@@ -9,6 +9,7 @@ sidebarDepth: 3
 [let 和 const 命令](./chapter2.md)  
 [变量的解构赋值](./chapter3.md)  
 [字符串扩展](./chapter4.md)  
+[数值的扩展](./chapter6.md)  
 [函数的扩展](./chapter7.md)  
 [数组的扩展](./chapter8.md)  
 [对象的扩展和新增方法](./chapter9.md)  
