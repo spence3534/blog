@@ -166,3 +166,120 @@ console.log(numbers);
 ```
 
 用`unshift`方法，就可以在数组的开始处添加值了。
+
+## 删除元素
+
+### 从数组末尾删除元素
+
+数组的`pop`方法，用于删除数组最靠后的元素。
+
+```js
+let arr = [1, 2, 3, 4, 5];
+arr.pop();
+console.log(arr);
+// [ 1, 2, 3, 4 ]
+```
+
+通过`push`和`pop`方法可以模拟栈，上面的数组输出的数是`1`到`4`，数组的长度是`4`。
+
+### 从数组开头删除元素
+
+如果移除数组里的第一个元素，可以用下面的代码。
+
+```js
+let numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+for (let i = 0; i < numbers.length; i++) {
+  numbers[i] = numbers[i + 1];
+}
+console.log(numbers);
+// [ 2, 3, 4, 5, 6, 7, 8, undefined ]
+```
+
+上面的代码中，把数组里面的所有元素都左移了一位，但是数组的长度还是`17`，这就意味着数组中有额外的一个元素
+（值为`undefined`）。在最后一次循环里，`i+1`引用了数组里还没初始化的一个位置。
+
+可以看到，只是把数组第一位的值用第二位覆盖了，并没有删除元素（因为数组的长度和之前的一样的，并且多了个未定义元素）。
+
+要从数组中移除这个值，可以使用下面的方法。
+
+```js
+let numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+
+Array.prototype.reIndex = function(myArr) {
+  const newArr = [];
+  for (let i = 0; i < myArr.length; i++) {
+    if (myArr[i] !== undefined) {
+      newArr.push(myArr[i]);
+    }
+  }
+  return newArr;
+};
+
+// 手动移除第一个元素并且重新排序
+Array.prototype.removeFirstPosition = function() {
+  for (let i = 0; i < this.length; i++) {
+    this[i] = this[i + 1];
+  }
+  return this.reIndex(this);
+};
+
+numbers = numbers.removeFirstPosition();
+console.log(numbers);
+// [ 2, 3, 4, 5, 6, 7, 8 ]
+```
+
+首先，在数组的原型上定义一个`reIndex`方法，在`reIndex`方法里定义一个新数组，将所有不是`undefined`的值从原来的数组复
+制到新数组中，并且将这个新数组返回。然后，再从数组的原型上定义一个`removeFirstPosition`方法，这个方法也就是刚才写过的
+`for`循环。只是把`numbers`改成了`this`，而这个`this`就是数组。下一步从`numbers`上调用这个方法，赋值给`numbers`，就
+得到了删除数组中第一个元素的结果。
+
+上面的代码只是用来示范而已，在项目中还是使用`shift`方法。
+
+### 使用`shift`方法
+
+要删除数组的第一个元素，可以用`shift`方法实现。
+
+```js
+let numbers = [1, 2, 3, 4, 5, 6];
+numbers.shift();
+console.log(numbers);
+// [ 2, 3, 4, 5, 6]
+```
+
+假如本来数组中的值是从`1`到`6`，长度为`7`。执行了上面的代码后，数组就只有`2`到`6`了，长度也会减小到`5`。
+
+使用`shift`和`unshift`方法，就可以用数组来模拟队列的数组结构。
+
+## 在任意位置添加或删除元素
+
+使用`splice`方法，简单地通过指定位置/索引，就可以删除相应位置上指定数量的元素。
+
+```js
+let numbers = [1, 2, 3, 4, 5, 6];
+numbers.splice(4, 2);
+console.log(numbers);
+// [ 1, 2, 3, 4 ]
+```
+
+上面的代码中，删除了从索引`4`开始的`2`个元素。这就意味着`numbers[5]`，`numbers[6]`从数组中删除了。
+现在数组中的值是`1, 2, 3, 4`，`5, 6`已被移除。
+
+:::warning
+对于 js 数组和对象，还可以使用`delete`运算符删除数组中的元素，例如`delete numbers[0]`。然而，数组位置
+`0`的值变成`undefined`，也就是说，以上操作等同于`numbers[0] = undefined`。因此，我们应该始终都使用
+`splice`、`pop`或`shift`方法来删除数组元素。
+:::
+现在，把数`5, 6`插入数组里，放到之前删除元素的位置上，可以再次使用`splice`。
+
+```js
+let numbers = [1, 2, 3, 4, 5, 6];
+numbers.splice(4, 2);
+console.log(numbers);
+// [ 1, 2, 3, 4 ]
+numbers.splice(4, 0, 5, 6);
+console.log(numbers);
+// [ 1, 2, 3, 4, 5, 6 ]
+```
+
+`splice`方法接收的第一个参数，表示想要删除或插入的索引值。第二个参数是删除元素的个数（这个例子的目的不是删除元素，所以传入`0`）。
+第三个参数往后，就是要添加到数组中的值。输出会发现值又变成了从`1`到`6`。
