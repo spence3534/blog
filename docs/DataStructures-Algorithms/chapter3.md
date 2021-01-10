@@ -5,23 +5,23 @@
 假如有一个这样的需求：保存班级上的同学的分数。可以这样做：
 
 ```js
-const xiaoming = 90
-const xiaohong = 85
-const xiaohuang = 75
-const xiaolan = 80
+const xiaoming = 90;
+const xiaohong = 85;
+const xiaohuang = 75;
+const xiaolan = 80;
 ```
 
 但是这并不是最好的方案，如果按照这种方式，只存部分同学的成绩，要创建几个到十几个变量，如果说存全班同学的成绩就要创建很多变量。
 显然这样是行不通的，那么我们就可以用数组来解决这个问题，更加简洁的呈现同样的信息。
 
 ```js
-const fractions = []
+const fractions = [];
 
-fractions[0] = 90
-fractions[1] = 85
-fractions[2] = 75
-fractions[3] = 80
-console.log(fractions)
+fractions[0] = 90;
+fractions[1] = 85;
+fractions[2] = 75;
+fractions[3] = 80;
+console.log(fractions);
 // 数组fraction的内容展示如下：
 // [ 90, 85, 75, 80 ]
 ```
@@ -31,9 +31,9 @@ console.log(fractions)
 用 js 声明、创建和初始化数组很简单，就像下面这样。
 
 ```js
-let daysOfweek = new Array()
-daysOfweek = new Array(7)
-daysOfweek = new Array("1", "2", "3", "4", "5")
+let daysOfweek = new Array();
+daysOfweek = new Array(7);
+daysOfweek = new Array("1", "2", "3", "4", "5");
 ```
 
 使用`new`关键字，就能简单地声明并初始化一个数组（第一行）。用这种方法，还可以创建一个指定长度的数组（第二行）。
@@ -42,20 +42,20 @@ daysOfweek = new Array("1", "2", "3", "4", "5")
 但是，用`new`创建数组并不是最好的方式。如果想在 js 中创建一个数组，只用中括号（`[]`）的形式就可以了，如下所示。
 
 ```js
-const daysOfweek = []
+const daysOfweek = [];
 ```
 
 也可以用一些元素初始化数组，如下所示。
 
 ```js
-let numbers = ["1", "2", "3", "4", "5"]
+let numbers = ["1", "2", "3", "4", "5"];
 ```
 
 如果你想知道数组里存了多少个元素（也就是它的长度），可以使用数组的`length`属性。下面的代码输出的是`5`。
 
 ```js
-let numbers = ["1", "2", "3", "4", "5"]
-console.log(numbers.length) // 5
+let numbers = ["1", "2", "3", "4", "5"];
+console.log(numbers.length); // 5
 ```
 
 ### 访问元素和迭代数组
@@ -64,28 +64,28 @@ console.log(numbers.length) // 5
 `numbers`里的所有元素，可以通过循环迭代数组、打印元素，如下：
 
 ```js
-let numbers = ["1", "2", "3", "4", "5"]
+let numbers = ["1", "2", "3", "4", "5"];
 for (let i = 0; i < numbers.length; i++) {
-  console.log(numbers[i])
+  console.log(numbers[i]);
 }
 ```
 
 来看另一个例子：求斐波那契数列的前 20 个数。已知斐波那契数列中的前两项是 1，从第三项开始，每一项都等于前两项之和。
 
 ```js
-const fibonacci = []
-fibonacci[1] = 1
-fibonacci[2] = 2
+const fibonacci = [];
+fibonacci[1] = 1;
+fibonacci[2] = 2;
 for (let i = 3; i < 20; i++) {
-  fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2]
-  console.log(fibonacci[i])
+  fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];
+  console.log(fibonacci[i]);
 }
 
 for (let i = 0; i < fibonacci.length; i++) {
-  console.log(fibonacci[i])
+  console.log(fibonacci[i]);
 }
 
-console.log(fibonacci)
+console.log(fibonacci);
 // [undefined, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
 ```
 
@@ -101,7 +101,7 @@ console.log(fibonacci)
 在数组中添加和删除元素也很容易，假如我们有一个数组`numbers`，初始化成了`0`到`9`；
 
 ```js
-let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 ```
 
 ### 在数组末尾插入元素
@@ -109,7 +109,7 @@ let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 如果想要给数组添加一个元素（比如`10`），只要把值赋给数组中最后一个空位上的元素就可以了。
 
 ```js
-numbers[numbers.length] = 10
+numbers[numbers.length] = 10;
 ```
 
 :::warning
@@ -122,11 +122,11 @@ numbers[numbers.length] = 10
 另外，有一个`push`方法，能把元素添加到数组的末尾。通过`push`方法，能添加任意个元素。
 
 ```js
-let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-numbers[numbers.length] = 10
-numbers.push(11)
-numbers.push(12, 13)
-console.log(numbers)
+let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+numbers[numbers.length] = 10;
+numbers.push(11);
+numbers.push(12, 13);
+console.log(numbers);
 // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 ```
 
@@ -140,15 +140,15 @@ console.log(numbers)
 写成一个函数，甚至将这个方法直接挂在`Array`的原型上，使所有数组的实例都可以访问到这个方法。来看下面的代码。
 
 ```js
-let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 Array.prototype.insertFirstPosition = function(value) {
   for (let i = this.length; i >= 0; i--) {
-    this[i] = this[i - 1]
+    this[i] = this[i - 1];
   }
-  this[0] = value
-}
-numbers.insertFirstPosition(-1)
-console.log(numbers)
+  this[0] = value;
+};
+numbers.insertFirstPosition(-1);
+console.log(numbers);
 // [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
 
@@ -158,10 +158,10 @@ console.log(numbers)
 的行为是一模一样的。
 
 ```js
-let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-numbers.unshift(-1, -2)
-numbers.unshift(-3, -4)
-console.log(numbers)
+let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+numbers.unshift(-1, -2);
+numbers.unshift(-3, -4);
+console.log(numbers);
 // [-3, -4, -1, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
 
