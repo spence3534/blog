@@ -141,7 +141,7 @@ console.log(numbers);
 
 ```js
 let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-Array.prototype.insertFirstPosition = function(value) {
+Array.prototype.insertFirstPosition = function (value) {
   for (let i = this.length; i >= 0; i--) {
     this[i] = this[i - 1];
   }
@@ -205,7 +205,7 @@ console.log(numbers);
 ```js
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8];
 
-Array.prototype.reIndex = function(myArr) {
+Array.prototype.reIndex = function (myArr) {
   const newArr = [];
   for (let i = 0; i < myArr.length; i++) {
     if (myArr[i] !== undefined) {
@@ -216,7 +216,7 @@ Array.prototype.reIndex = function(myArr) {
 };
 
 // 手动移除第一个元素并且重新排序
-Array.prototype.removeFirstPosition = function() {
+Array.prototype.removeFirstPosition = function () {
   for (let i = 0; i < this.length; i++) {
     this[i] = this[i + 1];
   }
