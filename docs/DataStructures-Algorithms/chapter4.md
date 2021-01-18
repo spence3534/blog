@@ -22,7 +22,7 @@ class Stack {
 }
 ```
 
-我们需要保存一种数据结构来保存栈里的元素。可以选择数组（以上就是`items`）。数据允许我们在任何位置添加或删除元素。
+我们需要保存一种数据结构来保存栈里的元素。可以选择数组（以上就是`items`）。数组允许我们在任何位置添加或删除元素。
 栈是遵从`LIFO`原则，需要对元素的插入和删除功能进行限制。下面要给栈声明一些方法。
 
 - `push()`：添加一个或者多个新元素到栈顶。
@@ -388,7 +388,7 @@ class Stack {
   toString() {
     // 如果栈为空，将返回一个空字符串。
     if (this.isEmpty()) {
-      return "";
+      return '';
     }
 
     // 如果栈不为空，就需要用它底部的第一个元素作为字符串的初始值
@@ -445,7 +445,7 @@ ES6 新增了一个叫做`Symbol`的基本类型，它表示独一无二的，�
 声明`items`属性。
 
 ```js
-const _items = Symbol("stackItems");
+const _items = Symbol('stackItems');
 class Stack {
   constructor() {
     this[_items] = [];
