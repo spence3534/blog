@@ -8,3 +8,4 @@ sidebarDepth: 3
 
 [数组](./chapter3.md)  
 [栈](./chapter4.md)
+[队列](./chapter5.md)

@@ -33,7 +33,7 @@ console.log(fractions);
 ```js
 let daysOfweek = new Array();
 daysOfweek = new Array(7);
-daysOfweek = new Array("1", "2", "3", "4", "5");
+daysOfweek = new Array('1', '2', '3', '4', '5');
 ```
 
 使用`new`关键字，就能简单地声明并初始化一个数组（第一行）。用这种方法，还可以创建一个指定长度的数组（第二行）。
@@ -48,13 +48,13 @@ const daysOfweek = [];
 也可以用一些元素初始化数组，如下所示。
 
 ```js
-let numbers = ["1", "2", "3", "4", "5"];
+let numbers = ['1', '2', '3', '4', '5'];
 ```
 
 如果你想知道数组里存了多少个元素（也就是它的长度），可以使用数组的`length`属性。下面的代码输出的是`5`。
 
 ```js
-let numbers = ["1", "2", "3", "4", "5"];
+let numbers = ['1', '2', '3', '4', '5'];
 console.log(numbers.length); // 5
 ```
 
@@ -64,7 +64,7 @@ console.log(numbers.length); // 5
 `numbers`里的所有元素，可以通过循环迭代数组、打印元素，如下：
 
 ```js
-let numbers = ["1", "2", "3", "4", "5"];
+let numbers = ['1', '2', '3', '4', '5'];
 for (let i = 0; i < numbers.length; i++) {
   console.log(numbers[i]);
 }
@@ -487,7 +487,8 @@ arr.forEach((x) => console.log(x % 2 === 0));
 // true
 ```
 
-####使用`map`和`filter`方法
+#### 使用`map`和`filter`方法
+
 js 还有两个会返回新数组的迭代方法。第一个是`map`。
 
 ```js
@@ -637,9 +638,9 @@ console.log(arr2);
 
 // 可遍历对象转数组
 let obj = {
-  0: "1",
-  1: "2",
-  2: "3",
+  0: '1',
+  1: '2',
+  2: '3',
   length: 3,
 };
 console.log(Array.from(obj));
@@ -823,9 +824,9 @@ console.log(arr);
 
 ```js
 const friends = [
-  { name: "xiaohong", age: 20 },
-  { name: "xiaoming", age: 19 },
-  { name: "xiaojia", age: 23 },
+  { name: 'xiaohong', age: 20 },
+  { name: 'xiaoming', age: 19 },
+  { name: 'xiaojia', age: 23 },
 ];
 
 function compare(a, b) {
@@ -854,7 +855,7 @@ console.log(friends.sort(compare));
 假如有这样一个数组。
 
 ```js
-let names = ["Ana", "ana", "john", "John"];
+let names = ['Ana', 'ana', 'john', 'John'];
 ```
 
 使用`sort`方法排序之后如下所示。
@@ -875,7 +876,7 @@ console.log(names.sort());
 如果给`sort`传入一个忽略大小写的比较函数，将输出`["Ana", "ana", "John", "john"]`。
 
 ```js
-let names = ["Ana", "ana", "john", "John"];
+let names = ['Ana', 'ana', 'john', 'John'];
 console.log(
   names.sort((a, b) => {
     if (a.toLowerCase() < b.toLowerCase()) {
@@ -894,7 +895,7 @@ console.log(
 如果希望小写字母排在前面，就需要使用`localeCompare`方法。
 
 ```js
-let names = ["Ana", "ana", "john", "John"];
+let names = ['Ana', 'ana', 'john', 'John'];
 names.sort((a, b) => a.localeCompare(b));
 console.log(names);
 // [ 'ana', 'Ana', 'john', 'John' ]
@@ -905,7 +906,7 @@ console.log(names);
 假如对带有重音符号的字符做排序的话，也可以用`localeCompare`来实现。
 
 ```js
-const name2 = ["Maève", "Maeve"];
+const name2 = ['Maève', 'Maeve'];
 console.log(name2.sort((a, b) => a.localeCompare(b)));
 // [ 'Maeve', 'Maève' ]
 ```
@@ -980,7 +981,7 @@ console.log(arr.join()); // 1,2,3,4,5,6,7,8,9,10
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-console.log(arr.join("-")); // 1-2-3-4-5-6-7-8-9-10
+console.log(arr.join('-')); // 1-2-3-4-5-6-7-8-9-10
 ```
 
 `join`方法，我一般用在给后端传多个时间或者日期用得比较多点。

@@ -79,6 +79,7 @@ module.exports = {
         children: [
           'chapter3',
           'chapter4',
+          'chapter5',
         ]
       }],
       sidebarDepth: 3,
