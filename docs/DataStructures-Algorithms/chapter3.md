@@ -11,8 +11,7 @@ const xiaohuang = 75;
 const xiaolan = 80;
 ```
 
-但是这并不是最好的方案，如果按照这种方式，只存部分同学的成绩，要创建几个到十几个变量，如果说存全班同学的成绩就要创建很多变量。
-显然这样是行不通的，那么我们就可以用数组来解决这个问题，更加简洁的呈现同样的信息。
+但是这并不是最好的方案，如果按照这种方式，只存部分同学的成绩，要创建几个到十几个变量，如果说存全班同学的成绩就要创建很多变量。显然这样是行不通的，那么我们就可以用数组来解决这个问题，更加简洁的呈现同样的信息。
 
 ```js
 const fractions = [];
@@ -33,11 +32,10 @@ console.log(fractions);
 ```js
 let daysOfweek = new Array();
 daysOfweek = new Array(7);
-daysOfweek = new Array('1', '2', '3', '4', '5');
+daysOfweek = new Array("1", "2", "3", "4", "5");
 ```
 
-使用`new`关键字，就能简单地声明并初始化一个数组（第一行）。用这种方法，还可以创建一个指定长度的数组（第二行）。
-另外也可以直接将数组元素作为参数传递给它的构造器（第三行）。
+使用`new`关键字，就能简单地声明并初始化一个数组（第一行）。用这种方法，还可以创建一个指定长度的数组（第二行）。另外也可以直接将数组元素作为参数传递给它的构造器（第三行）。
 
 但是，用`new`创建数组并不是最好的方式。如果想在 js 中创建一个数组，只用中括号（`[]`）的形式就可以了，如下所示。
 
@@ -48,23 +46,22 @@ const daysOfweek = [];
 也可以用一些元素初始化数组，如下所示。
 
 ```js
-let numbers = ['1', '2', '3', '4', '5'];
+let numbers = ["1", "2", "3", "4", "5"];
 ```
 
 如果你想知道数组里存了多少个元素（也就是它的长度），可以使用数组的`length`属性。下面的代码输出的是`5`。
 
 ```js
-let numbers = ['1', '2', '3', '4', '5'];
+let numbers = ["1", "2", "3", "4", "5"];
 console.log(numbers.length); // 5
 ```
 
 ### 访问元素和迭代数组
 
-要访问数组里特定位置的元素，可以用中括号传递数值的位置，就可以得到想知道的值或者赋新的值。假如想输出数组
-`numbers`里的所有元素，可以通过循环迭代数组、打印元素，如下：
+要访问数组里特定位置的元素，可以用中括号传递数值的位置，就可以得到想知道的值或者赋新的值。假如想输出数组`numbers`里的所有元素，可以通过循环迭代数组、打印元素，如下：
 
 ```js
-let numbers = ['1', '2', '3', '4', '5'];
+let numbers = ["1", "2", "3", "4", "5"];
 for (let i = 0; i < numbers.length; i++) {
   console.log(numbers[i]);
 }
@@ -104,7 +101,7 @@ console.log(fibonacci);
 let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 ```
 
-### 在数组末尾插入元素
+#### 在数组末尾插入元素
 
 如果想要给数组添加一个元素（比如`10`），只要把值赋给数组中最后一个空位上的元素就可以了。
 
@@ -113,8 +110,7 @@ numbers[numbers.length] = 10;
 ```
 
 :::warning
-在 js 中，数组是一个可修改的对象。如果添加元素，它就会自动增长。
-在 C 和 Java 等其他语言中，要决定数组的大小，想添加元素就要创建一个全新的数组，不能简单地往其中添加所需的元素。
+在 js 中，数组是一个可修改的对象。如果添加元素，它就会自动增长。在 C 和 Java 等其他语言中，要决定数组的大小，想添加元素就要创建一个全新的数组，不能简单地往其中添加所需的元素。
 :::
 
 #### 使用 push 方法
@@ -134,14 +130,11 @@ console.log(numbers);
 
 #### 在数组开头插入元素
 
-在数组中插入一个新元素（数`-1`），不像之前那样在末尾插入，而是放到数组的开头。实现这个需求，首先腾出数组里第一个
-元素的位置，把所有的元素向右移动一位。我们可以循环数组中的元素，从最后一位（长度就是数组的末尾位置）开始，将对应的
-前一个元素（`i-1`）的值赋给它（`i`），依次处理，最后把我们想要的赋给第一个位置（索引`0`）上。我们可以把这段逻辑
-写成一个函数，甚至将这个方法直接挂在`Array`的原型上，使所有数组的实例都可以访问到这个方法。来看下面的代码。
+在数组中插入一个新元素（数`-1`），不像之前那样在末尾插入，而是放到数组的开头。实现这个需求，首先腾出数组里第一个元素的位置，把所有的元素向右移动一位。我们可以循环数组中的元素，从最后一位（长度就是数组的末尾位置）开始，将对应的前一个元素（`i-1`）的值赋给它（`i`），依次处理，最后把我们想要的赋给第一个位置（索引`0`）上。我们可以把这段逻辑写成一个函数，甚至将这个方法直接挂在`Array`的原型上，使所有数组的实例都可以访问到这个方法。来看下面的代码。
 
 ```js
 let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-Array.prototype.insertFirstPosition = function(value) {
+Array.prototype.insertFirstPosition = function (value) {
   for (let i = this.length; i >= 0; i--) {
     this[i] = this[i - 1];
   }
@@ -195,8 +188,7 @@ console.log(numbers);
 // [ 2, 3, 4, 5, 6, 7, 8, undefined ]
 ```
 
-上面的代码中，把数组里面的所有元素都左移了一位，但是数组的长度还是`17`，这就意味着数组中有额外的一个元素
-（值为`undefined`）。在最后一次循环里，`i+1`引用了数组里还没初始化的一个位置。
+上面的代码中，把数组里面的所有元素都左移了一位，但是数组的长度还是`8`，这就意味着数组中有额外的一个元素（值为`undefined`）。在最后一次循环里，`i+1`引用了数组里还没初始化的一个位置。
 
 可以看到，只是把数组第一位的值用第二位覆盖了，并没有删除元素（因为数组的长度和之前的一样的，并且多了个未定义元素）。
 
@@ -205,7 +197,7 @@ console.log(numbers);
 ```js
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8];
 
-Array.prototype.reIndex = function(myArr) {
+Array.prototype.reIndex = function (myArr) {
   const newArr = [];
   for (let i = 0; i < myArr.length; i++) {
     if (myArr[i] !== undefined) {
@@ -216,7 +208,7 @@ Array.prototype.reIndex = function(myArr) {
 };
 
 // 手动移除第一个元素并且重新排序
-Array.prototype.removeFirstPosition = function() {
+Array.prototype.removeFirstPosition = function () {
   for (let i = 0; i < this.length; i++) {
     this[i] = this[i + 1];
   }
@@ -228,10 +220,7 @@ console.log(numbers);
 // [ 2, 3, 4, 5, 6, 7, 8 ]
 ```
 
-首先，在数组的原型上定义一个`reIndex`方法，在`reIndex`方法里定义一个新数组，将所有不是`undefined`的值从原来的数组复
-制到新数组中，并且将这个新数组返回。然后，再从数组的原型上定义一个`removeFirstPosition`方法，这个方法也就是刚才写过的
-`for`循环。只是把`numbers`改成了`this`，而这个`this`就是数组。下一步从`numbers`上调用这个方法，赋值给`numbers`，就
-得到了删除数组中第一个元素的结果。
+首先，在数组的原型上定义一个`reIndex`方法，在`reIndex`方法里定义一个新数组，将所有不是`undefined`的值从原来的数组复制到新数组中，并且将这个新数组返回。然后，再从数组的原型上定义一个`removeFirstPosition`方法，这个方法也就是刚才写过的`for`循环。只是把`numbers`改成了`this`，而这个`this`就是数组。下一步从`numbers`上调用这个方法，赋值给`numbers`，就得到了删除数组中第一个元素的结果。
 
 上面的代码只是用来示范而已，在项目中还是使用`shift`方法。
 
@@ -246,7 +235,7 @@ console.log(numbers);
 // [ 2, 3, 4, 5, 6]
 ```
 
-假如本来数组中的值是从`1`到`6`，长度为`7`。执行了上面的代码后，数组就只有`2`到`6`了，长度也会减小到`5`。
+假如本来数组中的值是从`1`到`6`，长度为`6`。执行了上面的代码后，数组就只有`2`到`6`了，长度也会减小到`5`。
 
 使用`shift`和`unshift`方法，就可以用数组来模拟队列的数组结构。
 
@@ -261,13 +250,10 @@ console.log(numbers);
 // [ 1, 2, 3, 4 ]
 ```
 
-上面的代码中，删除了从索引`4`开始的`2`个元素。这就意味着`numbers[5]`，`numbers[6]`从数组中删除了。
-现在数组中的值是`1, 2, 3, 4`，`5, 6`已被移除。
+上面的代码中，删除了从索引`4`开始的`2`个元素。这就意味着`numbers[5]`，`numbers[6]`从数组中删除了。现在数组中的值是`1, 2, 3, 4`，`5, 6`已被移除。
 
 :::warning
-对于 js 数组和对象，还可以使用`delete`运算符删除数组中的元素，例如`delete numbers[0]`。然而，数组位置
-`0`的值变成`undefined`，也就是说，以上操作等同于`numbers[0] = undefined`。因此，我们应该始终都使用
-`splice`、`pop`或`shift`方法来删除数组元素。
+对于 js 数组和对象，还可以使用`delete`运算符删除数组中的元素，例如`delete numbers[0]`。然而，数组位置`0`的值变成`empty`，也就是说，以上操作等同于`numbers[0] = ""`。因此，我们应该始终都使用`splice`、`pop`或`shift`方法来删除数组元素。
 :::
 现在，把数`5, 6`插入数组里，放到之前删除元素的位置上，可以再次使用`splice`。
 
@@ -281,8 +267,7 @@ console.log(numbers);
 // [ 1, 2, 3, 4, 5, 6 ]
 ```
 
-`splice`方法接收的第一个参数，表示想要删除或插入的索引值。第二个参数是删除元素的个数（这个例子的目的不是删除元素，所以传入`0`）。
-第三个参数往后，就是要添加到数组中的值。输出会发现值又变成了从`1`到`6`。
+`splice`方法接收的第一个参数，表示想要删除或插入的索引值。第二个参数是删除元素的个数（这个例子的目的不是删除元素，所以传入`0`）。第三个参数往后，就是要添加到数组中的值。输出会发现值又变成了从`1`到`6`。
 
 ## 二维和多维数组
 
@@ -300,20 +285,6 @@ js 只支持一维数组，并不支持矩阵。但是，可以像上面的代�
 let averageTemp = [];
 averageTemp[0] = [72, 75, 79, 79, 81, 81];
 averageTemp[1] = [81, 79, 75, 75, 73, 73];
-
-averageTemp[0][0] = 72;
-averageTemp[0][1] = 75;
-averageTemp[0][2] = 79;
-averageTemp[0][3] = 79;
-averageTemp[0][4] = 81;
-averageTemp[0][5] = 81;
-
-averageTemp[1][0] = 81;
-averageTemp[1][1] = 79;
-averageTemp[1][2] = 75;
-averageTemp[1][3] = 75;
-averageTemp[1][4] = 73;
-averageTemp[1][5] = 73;
 
 console.log(averageTemp);
 // [ [ 72, 75, 79, 79, 81, 81 ], [ 81, 79, 75, 75, 73, 73 ] ]
@@ -346,10 +317,9 @@ function printMatrix(arr) {
 printMatrix(averageTemp);
 ```
 
-需要迭代所有的行和列。因此，使用一个嵌套的`for`循环来处理，其中变量`i`为行，`j`为列。每个`myMatrix[i]`
-代表一个数组，因此需要在嵌套的`for`循环中迭代`myMatrix[i]`的每个位置。
+需要迭代所有的行和列。因此，使用一个嵌套的`for`循环来处理，其中变量`i`为行，`j`为列。每个`myMatrix[i]`代表一个数组，因此需要在嵌套的`for`循环中迭代`myMatrix[i]`的每个位置。
 
-:::tip
+:::success
 如果是在浏览器中打印二维数组，可以使用`console.table(averageTemp)`语句。这样会显示一个更加友好的输出结果。
 :::
 
@@ -387,8 +357,7 @@ for (let i = 0; i < matrix3x3x3.length; i++) {
 }
 ```
 
-如果是一个`3 x 3 x 3 x 3`的矩阵，就要用到四层嵌套的`for`语句，以此类推。但是在开发当中很少会用到四维
-数组，二维数组最常见的。
+如果是一个`3 x 3 x 3 x 3`的矩阵，就要用到四层嵌套的`for`语句，以此类推。但是在开发当中很少会用到四维数组，二维数组最常见的。
 
 ## JavaScript 的数组方法
 
@@ -408,9 +377,8 @@ for (let i = 0; i < matrix3x3x3.length; i++) {
 - `sort`：按照字母顺序对数组排序，支持传入指定排序方法的函数作为参数。（一般用于去重）。
 - `toString`：将数组作为字符串返回。（把数组转成以逗号分隔的字符串）
 - `valueOf`：和`toString`类似，将数组作为字符串返回。
-
-在前面已经讲过`push`、`pop`、`shift`、`unshift`和`splice`方法，下面讲表格中的数组方法，这些方法在开发当中都会大量用到，
-这其中的一些方法在函数式编程中是很有用的。
+  在前面已经讲过`push`、`pop`、`shift`、`unshift`和`splice`方法，下面讲表格中的数组方法，这些方法在开发当中都会大量用到，
+  这其中的一些方法在函数式编程中是很有用的。
 
 ### 数组和并
 
@@ -638,9 +606,9 @@ console.log(arr2);
 
 // 可遍历对象转数组
 let obj = {
-  0: '1',
-  1: '2',
-  2: '3',
+  0: "1",
+  1: "2",
+  2: "3",
   length: 3,
 };
 console.log(Array.from(obj));
@@ -824,9 +792,9 @@ console.log(arr);
 
 ```js
 const friends = [
-  { name: 'xiaohong', age: 20 },
-  { name: 'xiaoming', age: 19 },
-  { name: 'xiaojia', age: 23 },
+  { name: "xiaohong", age: 20 },
+  { name: "xiaoming", age: 19 },
+  { name: "xiaojia", age: 23 },
 ];
 
 function compare(a, b) {
@@ -855,7 +823,7 @@ console.log(friends.sort(compare));
 假如有这样一个数组。
 
 ```js
-let names = ['Ana', 'ana', 'john', 'John'];
+let names = ["Ana", "ana", "john", "John"];
 ```
 
 使用`sort`方法排序之后如下所示。
@@ -865,8 +833,7 @@ console.log(names.sort());
 // [ 'Ana', 'John', 'ana', 'john' ]
 ```
 
-既然`a`在字母表里排第一位，为何`ana`却排在了`John`之后呢？这是因为 js 在做字符比较的时候，是根据字符对应
-的 ASCII 值来比较的。例如，`A、J、a、j`对应的 ASCII 值分别是`65、74、97、106`。
+既然`a`在字母表里排第一位，为何`ana`却排在了`John`之后呢？这是因为 js 在做字符比较的时候，是根据字符对应的 ASCII 值来比较的。例如，`A、J、a、j`对应的的一种叫做 ASCII 值分别是`65、74、97、106`。
 
 虽然`a`在字母表里是最靠前的，但`J`的 ASCII 值比`a`的小，所以排在了`a`前面。
 :::warning
@@ -876,7 +843,7 @@ console.log(names.sort());
 如果给`sort`传入一个忽略大小写的比较函数，将输出`["Ana", "ana", "John", "john"]`。
 
 ```js
-let names = ['Ana', 'ana', 'john', 'John'];
+let names = ["Ana", "ana", "john", "John"];
 console.log(
   names.sort((a, b) => {
     if (a.toLowerCase() < b.toLowerCase()) {
@@ -895,7 +862,7 @@ console.log(
 如果希望小写字母排在前面，就需要使用`localeCompare`方法。
 
 ```js
-let names = ['Ana', 'ana', 'john', 'John'];
+let names = ["Ana", "ana", "john", "John"];
 names.sort((a, b) => a.localeCompare(b));
 console.log(names);
 // [ 'ana', 'Ana', 'john', 'John' ]
@@ -906,7 +873,7 @@ console.log(names);
 假如对带有重音符号的字符做排序的话，也可以用`localeCompare`来实现。
 
 ```js
-const name2 = ['Maève', 'Maeve'];
+const name2 = ["Maève", "Maeve"];
 console.log(name2.sort((a, b) => a.localeCompare(b)));
 // [ 'Maeve', 'Maève' ]
 ```
@@ -915,8 +882,7 @@ console.log(name2.sort((a, b) => a.localeCompare(b)));
 
 ### 搜索
 
-搜索有两个方法：`indexOf`和`lastIndexOf`这两个方法，前者是返回与参数匹配的第一个元素的索引。后者则是返回与
-参数匹配的最后一个元素的索引，就用`arr`数组来做例子。
+搜索有两个方法：`indexOf`和`lastIndexOf`这两个方法，前者是返回与参数匹配的第一个元素的索引。后者则是返回与参数匹配的最后一个元素的索引，就用`arr`数组来做例子。
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -943,8 +909,7 @@ console.log(arr.findIndex(multipleOf)); // -1
 
 `find`和`findIndex`方法接收一个回调函数，搜索一个满足回调函数条件的值。上面的例子中，要从数组里找一个`13`的倍数。
 
-`find`和`findIndex`的不同之处在于，`find`方法返回第一个满足条件的值，而`findIndex`方法返回这个值在数组中的索引。
-如果没有满足条件的值，`find`返回`undefined`，而`findIndex`返回`-1`。
+`find`和`findIndex`的不同之处在于，`find`方法返回第一个满足条件的值，而`findIndex`方法返回这个值在数组中的索引。如果没有满足条件的值，`find`返回`undefined`，而`findIndex`返回`-1`。
 
 #### 使用 includes 方法
 
@@ -981,7 +946,7 @@ console.log(arr.join()); // 1,2,3,4,5,6,7,8,9,10
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-console.log(arr.join('-')); // 1-2-3-4-5-6-7-8-9-10
+console.log(arr.join("-")); // 1-2-3-4-5-6-7-8-9-10
 ```
 
 `join`方法，我一般用在给后端传多个时间或者日期用得比较多点。

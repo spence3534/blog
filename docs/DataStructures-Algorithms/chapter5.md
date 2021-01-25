@@ -7,7 +7,9 @@
 队列是遵循**先进先出**（FIFO，也就是先进来的先出去）原则的一组有序的项。队列是在尾部添加新元素，并从顶部
 移除元素，最新添加的元素必须排在队列的末尾。
 
-在生活中有很多例子跟队列一样的，就好比如超市的收银台一样，都会排队，而排在第一位的人先接受服务。
+在生活中有很多例子，就好比如超市的收银台一样，都会排队，而排在第一位的人先接受服务。
+
+<img src="./images/5/5-1-1.jpg" width="400" height="150" />
 
 在计算机当中，一个比较常见的例子就是打印文件，比如说需要打印五份文件。我们会打开每个文件，然后点击
 打印。每个文件都会被发送到打印队列。第一个发送到打印队列的文档会先被打印，以此类推，直到打印完所有文件。
@@ -156,12 +158,12 @@ console.log(queue.isEmpty()); // true
 接下来，添加一些元素，可以是任何类型的元素。
 
 ```js
-queue.enqueue('xiaohong');
-queue.enqueue('xiaoming');
-queue.enqueue('xiaolan');
+queue.enqueue("xiaohong");
+queue.enqueue("xiaoming");
+queue.enqueue("xiaolan");
 ```
 
-再执行一下其他的命令。
+再执行一下其他方法。
 
 ```js
 console.log(queue.toString()); // 队列里有xiaohong,xiaoming,xiaolan
@@ -221,7 +223,7 @@ class Queue {
 
   toString() {
     if (this.isEmpty()) {
-      return '';
+      return "";
     }
 
     let objString = `${this.items[this.lowestCount]}`;
@@ -238,9 +240,9 @@ const queue = new Queue();
 
 console.log(queue.isEmpty()); // true
 
-queue.enqueue('xiaohong');
-queue.enqueue('xiaoming');
-queue.enqueue('xiaolan');
+queue.enqueue("xiaohong");
+queue.enqueue("xiaoming");
+queue.enqueue("xiaolan");
 
 console.log(queue.toString()); // 队列里有xiaohong,xiaoming,xiaolan
 console.log(queue.size()); // 3 // 队列里有三个元素
@@ -272,17 +274,16 @@ class Deque {
 }
 ```
 
-既然双端队列是一种特殊的队列，可以看到构造函数的部分代码和队列一样的，包括相同的内部属性和下面的方法：`isEmpty`、
-`clear`、`size`和`toString`。
+既然双端队列是一种特殊的队列，可以看到构造函数的部分代码和队列一样的，包括相同的内部属性和下面的方法：`isEmpty`、`clear`、`size`和`toString`。
 
 双端队列可以在两端添加和移除元素，下面列出这几种方法。
 
 - `addFront`：在双端队列前面添加新的元素。
-- `addBack`：在双端队列的后面添加新元素。
-- `removeFront`：从双端队列前面移除一个元素。
-- `removeBack`：从双端队列后面移除一个元素。
-- `peekFront`：获取双端队列前面的第一个元素。
-- `peekBack`：获取双端队列后面的第一个元素。
+- `addBack`：在双端队列的后面添加新元素（和队列的`enqueue`方法是一样的）。
+- `removeFront`：从双端队列前面移除一个元素（和队列的`dequeue`方法是一样的）。
+- `removeBack`：从双端队列后面移除一个元素（和栈的`pop`方法是一样的）。
+- `peekFront`：获取双端队列前面的第一个元素（和队列的`peek`方法是一样的）。
+- `peekBack`：获取双端队列后面的第一个元素（和栈的`peek`方法是一样的）。
 
 #### addFront 方法
 
@@ -313,14 +314,16 @@ addFront(ele) {
 
 3. `lowestCount`为`0`时，我们可以设置一个负值的键，就拿数组来说，要在第一位添加一个新元素，就要把所有的元素都往后挪一位来空出第一个位置。于此同时，我们并不想丢失任何已经存在双端队列里的值，就从最后一位开始迭代所有的值，并把元素赋上索引值减`1`的位置的值。在所有的元素都完成移动之后，第一位的索引值将是`0`，再把添加的新元素覆盖它就可以了。
 
+### 使用 Deque 类
+
 ```js
 const deque = new Deque();
 
-deque.addBack('小红');
-deque.addBack('小明');
+deque.addBack("小红");
+deque.addBack("小明");
 console.log(deque.toString()); // 小红, 小明
 
-deque.addBack('小兰');
+deque.addBack("小兰");
 console.log(deque.toString()); // 小红, 小明, 小兰
 console.log(deque.size()); // 3
 
@@ -333,11 +336,11 @@ console.log(deque.toString()); // 小明, 小兰
 deque.removeBack(); // 小兰走了
 console.log(deque.toString()); // 剩下小明
 
-deque.addFront('小红'); // 这小红胃口有点大，决定回去叫阿姨给多点饭
+deque.addFront("小红"); // 这小红胃口有点大，决定回去叫阿姨给多点饭
 console.log(deque.toString()); // 小红, 小明
 ```
 
-以上就是双端队列的所有操作。下面是双端队列的所有代码。
+以上就是双端队列的所有操作。下面列出双端队列的所有代码。
 
 ```js
 class Deque {
@@ -421,7 +424,7 @@ class Deque {
 
   toString() {
     if (this.isEmpty()) {
-      return '';
+      return "";
     }
 
     let objString = this.items[this.lowestCount];
@@ -432,3 +435,58 @@ class Deque {
   }
 }
 ```
+
+## 用队列、双端队列解决问题
+
+### 循环队列——击鼓传花游戏
+
+循环队列的一个例子是击鼓传花游戏。在这个游戏里，小孩子围成一个圆圈，把花尽快地传递给旁边的人。某一时刻传花停止了，花在谁手里，谁就被淘汰。重复这个过程，直到只剩下一个孩子。
+
+下面来模拟击鼓传花游戏。
+
+```js
+function hotPotato(names, num) {
+  const queue = new Queue();
+  const eliminatedList = []; // 淘汰的名单
+
+  for (let i = 0; i < names.length; i++) {
+    // 先把传入的人名添加到队列里
+    queue.enqueue(names[i]);
+  }
+
+  // size()是队列的元素个数
+  while (queue.size() > 1) {
+    // 根据传入的次数进行循环
+    for (let i = 0; i < num; i++) {
+      // 从队列的头部移除一项，并把移除的这项放到队列尾部
+      queue.enqueue(queue.dequeue());
+    }
+    // for循环一旦达到传入次数时，就把队列最前一项移除并添加到names数组中
+    eliminatedList.push(queue.dequeue());
+  }
+
+  return {
+    eliminated: eliminatedList,
+    winner: queue.dequeue(),
+  };
+}
+```
+
+这里就用上面的`Queue`类了。`hotPotato`函数接收两个参数：`names`是一份名单，`num`是循环次数。首先把名单里的名字添加到队列中，然后用`num`迭代队列，从队列头部移除一项并这项添加到队列尾部。一旦达到`num`的次数（`for`循环停止了），将从队列移除一个元素并添加到淘汰名单里，直到队列里只剩下一个元素，这个元素就是获胜的人。
+
+```js
+const names = ["小红", "小黄", "小明", "小兰", "小吕"];
+const result = hotPotato(names, 1);
+
+result.eliminated.forEach((item) => {
+  console.log(`${item}被淘汰`);
+  // 小黄被淘汰;
+  // 小兰被淘汰;
+  // 小红被淘汰;
+  // 小吕被淘汰;
+});
+console.log(`${result.winner}胜利了`);
+// 小明胜利了;
+```
+
+可以传入不同的数值，模拟不同的场景。
