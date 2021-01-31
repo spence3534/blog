@@ -4,15 +4,13 @@
 
 ## 队列
 
-队列是遵循**先进先出**（FIFO，也就是先进来的先出去）原则的一组有序的项。队列是在尾部添加新元素，并从顶部
-移除元素，最新添加的元素必须排在队列的末尾。
+队列是遵循**先进先出**（FIFO，也就是先进来的先出去）原则的一组有序的项。队列是在尾部添加新元素，并从顶部移除元素，最新添加的元素必须排在队列的末尾。
 
 在生活中有很多例子，就好比如超市的收银台一样，都会排队，而排在第一位的人先接受服务。
 
 <img src="./images/5/5-1-1.jpg" width="400" height="150" />
 
-在计算机当中，一个比较常见的例子就是打印文件，比如说需要打印五份文件。我们会打开每个文件，然后点击
-打印。每个文件都会被发送到打印队列。第一个发送到打印队列的文档会先被打印，以此类推，直到打印完所有文件。
+在计算机当中，一个比较常见的例子就是打印文件，比如说需要打印五份文件。我们会打开每个文件，然后点击打印。每个文件都会被发送到打印队列。第一个发送到打印队列的文档会先被打印，以此类推，直到打印完所有文件。
 
 ### 创建队列
 
@@ -28,8 +26,7 @@ class Queue {
 }
 ```
 
-首先用一个存储队列中的数据结构，可以是数组，也可以是对象。`items`就是用来存储元素的。而你会发现`Queue`类和
-`Stack`类非常类似，只是添加和删除的原则不一样而已。
+首先用一个存储队列中的数据结构，可以是数组，也可以是对象。`items`就是用来存储元素的。而你会发现`Queue`类和`Stack`类非常类似，只是添加和删除的原则不一样而已。
 
 `count`属性是帮助我们控制队列的大小的。由于要把队列前端的元素移除，就需要一个变量来帮助我们追踪第一个元素。
 因此，声明一个`lowestCount`变量。
@@ -44,8 +41,7 @@ class Queue {
 
 #### 向队列添加元素
 
-首先实现`enqueue`方法，该方法的用处是向队列添加元素，记住！新的项只能添加到队列末尾。这个方法和`Stack`类的
-`push`方法一样。
+首先实现`enqueue`方法，该方法的用处是向队列添加元素，记住！新的项只能添加到队列末尾。这个方法和`Stack`类的`push`方法一样。
 
 ```js
 enqueue(ele) {
@@ -158,9 +154,9 @@ console.log(queue.isEmpty()); // true
 接下来，添加一些元素，可以是任何类型的元素。
 
 ```js
-queue.enqueue("xiaohong");
-queue.enqueue("xiaoming");
-queue.enqueue("xiaolan");
+queue.enqueue('xiaohong');
+queue.enqueue('xiaoming');
+queue.enqueue('xiaolan');
 ```
 
 再执行一下其他方法。
@@ -223,7 +219,7 @@ class Queue {
 
   toString() {
     if (this.isEmpty()) {
-      return "";
+      return '';
     }
 
     let objString = `${this.items[this.lowestCount]}`;
@@ -240,9 +236,9 @@ const queue = new Queue();
 
 console.log(queue.isEmpty()); // true
 
-queue.enqueue("xiaohong");
-queue.enqueue("xiaoming");
-queue.enqueue("xiaolan");
+queue.enqueue('xiaohong');
+queue.enqueue('xiaoming');
+queue.enqueue('xiaolan');
 
 console.log(queue.toString()); // 队列里有xiaohong,xiaoming,xiaolan
 console.log(queue.size()); // 3 // 队列里有三个元素
@@ -319,11 +315,11 @@ addFront(ele) {
 ```js
 const deque = new Deque();
 
-deque.addBack("小红");
-deque.addBack("小明");
+deque.addBack('小红');
+deque.addBack('小明');
 console.log(deque.toString()); // 小红, 小明
 
-deque.addBack("小兰");
+deque.addBack('小兰');
 console.log(deque.toString()); // 小红, 小明, 小兰
 console.log(deque.size()); // 3
 
@@ -336,7 +332,7 @@ console.log(deque.toString()); // 小明, 小兰
 deque.removeBack(); // 小兰走了
 console.log(deque.toString()); // 剩下小明
 
-deque.addFront("小红"); // 这小红胃口有点大，决定回去叫阿姨给多点饭
+deque.addFront('小红'); // 这小红胃口有点大，决定回去叫阿姨给多点饭
 console.log(deque.toString()); // 小红, 小明
 ```
 
@@ -424,7 +420,7 @@ class Deque {
 
   toString() {
     if (this.isEmpty()) {
-      return "";
+      return '';
     }
 
     let objString = this.items[this.lowestCount];
@@ -475,7 +471,7 @@ function hotPotato(names, num) {
 这里就用上面的`Queue`类了。`hotPotato`函数接收两个参数：`names`是一份名单，`num`是循环次数。首先把名单里的名字添加到队列中，然后用`num`迭代队列，从队列头部移除一项并这项添加到队列尾部。一旦达到`num`的次数（`for`循环停止了），将从队列移除一个元素并添加到淘汰名单里，直到队列里只剩下一个元素，这个元素就是获胜的人。
 
 ```js
-const names = ["小红", "小黄", "小明", "小兰", "小吕"];
+const names = ['小红', '小黄', '小明', '小兰', '小吕'];
 const result = hotPotato(names, 1);
 
 result.eliminated.forEach((item) => {
@@ -489,4 +485,60 @@ console.log(`${result.winner}胜利了`);
 // 小明胜利了;
 ```
 
+下面的图模拟上面代码的输出过程。
+
+<img src="./images/5/5-3-1.jpg" width="493" height="410"  />
+
 可以传入不同的数值，模拟不同的场景。
+
+### 回文检查
+
+回文是把相同的词汇或句子，在下文中调换位置或颠倒过来，产生首尾回环的情趣，叫做“回文”。
+
+有不同的算法可以检查一个词或字符串是不是回文。最简单的方式就是把字符串反转过来并检查它和原字符串是否相同，如果相同，那就是回文。可以用栈来实现，但是利用数据结构来解决这个问题的最简单的方法就是双端队列。
+
+```js
+function palindromeCheck(str) {
+  if (str === undefined || str === null || (str !== null && str.length === 0)) {
+    return false;
+  }
+
+  const deque = new Deque();
+  // 把字符串转成小写并剔除空格
+  const lowerString = str
+    .toLocaleLowerCase()
+    .split(' ')
+    .join('');
+  // 是否为回文标识
+  let isEqual = true;
+  let firstChar = ''; // 双端队列前面的字符串
+  let lastChar = ''; // 双端队列后面的字符串
+
+  // 把字符串逐个添加到双端队列里
+  for (let i = 0; i < lowerString.length; i++) {
+    deque.addBack(lowerString.charAt(i));
+  }
+
+  while (deque.size() > 1 && isEqual) {
+    // 从双端队列的前端移除元素并返回
+    firstChar = deque.removeFront();
+    // 从双端队列的后端移除元素并返回
+    lastChar = deque.removeBack();
+    // 如果双端队列前后端移除的元素互不相同就不是回文
+    if (firstChar !== lastChar) {
+      isEqual = false;
+    }
+    return isEqual;
+  }
+}
+
+console.log('1', palindromeCheck('上海自来水来自海上')); //true
+console.log('2', palindromeCheck('天连碧水碧连天')); // true
+console.log('3', palindromeCheck('小姐姐姐姐小')); // true
+console.log('4', palindromeCheck('知道不不知道')); // false
+```
+
+:::tip
+使用变量引用的时候需要控制的节点非常重要，这样就不会丢失节点之间的链接。可以只使用一个变量`prev`，但这样很难控制节点之间的连接。
+所以，最好声明一个额外的变量来处理这些引用。
+:::

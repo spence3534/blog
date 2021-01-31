@@ -236,7 +236,7 @@ console.log(stack);
 
 可以看到`Stack`类内部的`items`包含的值和`count`属性在最后的`log`中输出。
 
-### 验证一个栈是否为空和它的大小
+#### 验证一个栈是否为空和它的大小
 
 `count`属性也表示栈的大小。因此，可以简单的返回`count`属性的值来实现`size`方法。
 
@@ -254,7 +254,7 @@ isEmpty() {
 }
 ```
 
-### 从栈中弹出元素
+#### 从栈中弹出元素
 
 由于我们没有使用数组来储存元素，需要手动实现移除元素的逻辑。`pop`方法一样是返回了从栈中移除的元素，看下面的代码。
 
@@ -307,7 +307,7 @@ anotherClear() {
 }
 ```
 
-### 创建 toString 方法
+#### 创建 toString 方法
 
 在数组的版本中，并不需要关心`toString`方法的实现，因为数据结构可以直接使用数组本身的`toString`方法。
 对于使用对象的版本，将创建一个`toString`方法来像数组一样输出栈的内容。
@@ -390,7 +390,7 @@ class Stack {
   toString() {
     // 栈为空，将返回一个空字符串。
     if (this.isEmpty()) {
-      return "";
+      return '';
     }
 
     // 栈不为空，就需要用它底部的第一个元素作为字符串的初始值
@@ -442,7 +442,7 @@ ES6 新增了一个叫做`Symbol`的基本类型，它表示独一无二的，�
 声明`items`属性。
 
 ```js
-const _items = Symbol("stackItems");
+const _items = Symbol('stackItems');
 class Stack {
   constructor() {
     this[_items] = [];
@@ -517,8 +517,8 @@ class Stack {
 function decimal(num) {
   const remStack = []; // 存储二进制的栈
   let number = num; // 需要转成二进制的数
-  let rem = ""; // 余数
-  let binaryString = ""; // 存储推出栈的元素
+  let rem = ''; // 余数
+  let binaryString = ''; // 存储推出栈的元素
 
   // 当参数不为0时，进入while语句
   while (number > 0) {
@@ -547,13 +547,13 @@ console.log(decimal(100)); // 1100100
 ```js
 function baseConverter(num, base) {
   const remStack = [];
-  const digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let number = num;
-  let rem = "";
-  let baseString = "";
+  let rem = '';
+  let baseString = '';
 
   if (!(base >= 2 && base <= 36)) {
-    return "";
+    return '';
   }
 
   while (number > 0) {
