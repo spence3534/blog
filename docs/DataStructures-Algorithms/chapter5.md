@@ -6,7 +6,7 @@
 
 队列是遵循**先进先出**（FIFO，也就是先进来的先出去）原则的一组有序的项。队列是在尾部添加新元素，并从顶部移除元素，最新添加的元素必须排在队列的末尾。
 
-在生活中有很多例子，就好比如超市的收银台一样，都会排队，而排在第一位的人先接受服务。
+在生活中有很多例子，就好比如超市的收银台，排在第一位的人先接受服务。
 
 <img src="./images/5/5-1-1.jpg" width="400" height="150" />
 
@@ -154,9 +154,9 @@ console.log(queue.isEmpty()); // true
 接下来，添加一些元素，可以是任何类型的元素。
 
 ```js
-queue.enqueue('xiaohong');
-queue.enqueue('xiaoming');
-queue.enqueue('xiaolan');
+queue.enqueue("xiaohong");
+queue.enqueue("xiaoming");
+queue.enqueue("xiaolan");
 ```
 
 再执行一下其他方法。
@@ -219,7 +219,7 @@ class Queue {
 
   toString() {
     if (this.isEmpty()) {
-      return '';
+      return "";
     }
 
     let objString = `${this.items[this.lowestCount]}`;
@@ -236,9 +236,9 @@ const queue = new Queue();
 
 console.log(queue.isEmpty()); // true
 
-queue.enqueue('xiaohong');
-queue.enqueue('xiaoming');
-queue.enqueue('xiaolan');
+queue.enqueue("xiaohong");
+queue.enqueue("xiaoming");
+queue.enqueue("xiaolan");
 
 console.log(queue.toString()); // 队列里有xiaohong,xiaoming,xiaolan
 console.log(queue.size()); // 3 // 队列里有三个元素
@@ -315,11 +315,11 @@ addFront(ele) {
 ```js
 const deque = new Deque();
 
-deque.addBack('小红');
-deque.addBack('小明');
+deque.addBack("小红");
+deque.addBack("小明");
 console.log(deque.toString()); // 小红, 小明
 
-deque.addBack('小兰');
+deque.addBack("小兰");
 console.log(deque.toString()); // 小红, 小明, 小兰
 console.log(deque.size()); // 3
 
@@ -332,7 +332,7 @@ console.log(deque.toString()); // 小明, 小兰
 deque.removeBack(); // 小兰走了
 console.log(deque.toString()); // 剩下小明
 
-deque.addFront('小红'); // 这小红胃口有点大，决定回去叫阿姨给多点饭
+deque.addFront("小红"); // 这小红胃口有点大，决定回去叫阿姨给多点饭
 console.log(deque.toString()); // 小红, 小明
 ```
 
@@ -420,7 +420,7 @@ class Deque {
 
   toString() {
     if (this.isEmpty()) {
-      return '';
+      return "";
     }
 
     let objString = this.items[this.lowestCount];
@@ -450,7 +450,6 @@ function hotPotato(names, num) {
     queue.enqueue(names[i]);
   }
 
-  // size()是队列的元素个数
   while (queue.size() > 1) {
     // 根据传入的次数进行循环
     for (let i = 0; i < num; i++) {
@@ -471,7 +470,7 @@ function hotPotato(names, num) {
 这里就用上面的`Queue`类了。`hotPotato`函数接收两个参数：`names`是一份名单，`num`是循环次数。首先把名单里的名字添加到队列中，然后用`num`迭代队列，从队列头部移除一项并这项添加到队列尾部。一旦达到`num`的次数（`for`循环停止了），将从队列移除一个元素并添加到淘汰名单里，直到队列里只剩下一个元素，这个元素就是获胜的人。
 
 ```js
-const names = ['小红', '小黄', '小明', '小兰', '小吕'];
+const names = ["小红", "小黄", "小明", "小兰", "小吕"];
 const result = hotPotato(names, 1);
 
 result.eliminated.forEach((item) => {
@@ -505,14 +504,11 @@ function palindromeCheck(str) {
 
   const deque = new Deque();
   // 把字符串转成小写并剔除空格
-  const lowerString = str
-    .toLocaleLowerCase()
-    .split(' ')
-    .join('');
+  const lowerString = str.toLocaleLowerCase().split(" ").join("");
   // 是否为回文标识
   let isEqual = true;
-  let firstChar = ''; // 双端队列前面的字符串
-  let lastChar = ''; // 双端队列后面的字符串
+  let firstChar = ""; // 双端队列前面的字符串
+  let lastChar = ""; // 双端队列后面的字符串
 
   // 把字符串逐个添加到双端队列里
   for (let i = 0; i < lowerString.length; i++) {
@@ -532,13 +528,8 @@ function palindromeCheck(str) {
   }
 }
 
-console.log('1', palindromeCheck('上海自来水来自海上')); //true
-console.log('2', palindromeCheck('天连碧水碧连天')); // true
-console.log('3', palindromeCheck('小姐姐姐姐小')); // true
-console.log('4', palindromeCheck('知道不不知道')); // false
+console.log("1", palindromeCheck("上海自来水来自海上")); //true
+console.log("2", palindromeCheck("天连碧水碧连天")); // true
+console.log("3", palindromeCheck("小姐姐姐姐小")); // true
+console.log("4", palindromeCheck("知道不不知道")); // false
 ```
-
-:::tip
-使用变量引用的时候需要控制的节点非常重要，这样就不会丢失节点之间的链接。可以只使用一个变量`prev`，但这样很难控制节点之间的连接。
-所以，最好声明一个额外的变量来处理这些引用。
-:::

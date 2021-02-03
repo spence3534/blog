@@ -6,7 +6,7 @@
 
 链表存储有序的元素集合，但和数组不同，链表中的元素在内存中并不是连续放置的，每个元素有一个存储元素本身的节点和一个指向下一个元素的引用（也叫指针或链接）组成。
 
-  <img src="./images/6/6-1-1.jpg"  />
+<img src="./images/6/6-1-1.jpg"  />
 
 链表的一个好处是，添加或移除元素时不需要移动其他元素。但链表需要指针，所以实现链表时需要额外注意。在数组中，我们可以直接访问任何位置的元素，要想访问链表中间的一个元素，就要从表头开始迭代链表直到找到所需的元素。
 
@@ -24,7 +24,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function(a, b) {
+    this.equalsFn = function (a, b) {
       return a === b;
     };
   }
@@ -58,7 +58,7 @@ class Node {
 
 ### 向链表尾部中添加元素
 
-向`LinkedList`对象尾部添加元素时，有两种场景：链表为空，添加的是第一个元素；链表不为空，向链表里追加元素。
+向`LinkedList`对象尾部添加元素时，有两种情况：链表为空，添加的是第一个元素；链表不为空，向链表里追加元素。
 
 ```js
 push(ele) {
@@ -70,7 +70,7 @@ push(ele) {
   } else {
     current = this.head;
     while (current.next !== undefined) {
-      // 设置current为下一个元素
+      // 设置current为下一个元素进行迭代
       current = current.next;
     }
     // current.next为undefined就表示到了链表的尾部，然后把最后一个元素的next属性设置为下一元素
@@ -80,14 +80,19 @@ push(ele) {
 }
 ```
 
-- 场景一：向空链表中添加一个元素。如果`head`等于`undefined`，那就证明是向链表添加第一个元素。
-- 场景二：向一个不为空的链表尾部添加一个元素，首先要找到最后一个元素。只能通过第一个元素的引用。
+1. 向空链表中添加一个元素。如果`head`等于`undefined`，那就证明是向链表添加第一个元素，看下图。
+
+<img src="./images/6/6-1-1-1.jpg"  />
 
 :::warning
 链表最后一个节点的下一个元素始终是`undefined`或`null`
 :::
 
-并且使用循环访问链表才能找到最后一个元素。这就需要一个指向链表中`current`变量。在循环访问链表的过程中，当`current.next`元素为`undefined`时，就证明到达链表的尾部了。然后让当前元素（也就是最后一个元素）的`next`指针指向想要添加到链表的节点。
+2. 向一个不为空的链表尾部添加一个元素，首先要找到最后一个元素。只能通过第一个元素的引用，循环访问列表，直到找到最后一项。
+
+<img src="./images/6/6-1-1-2.png"  />
+
+使用循环访问链表才能找到最后一个元素。这就需要一个指向链表中`current`项的变量。在循环访问链表的过程中，当`current.next`元素为`undefined`时，就证明到达链表的尾部了。然后让当前元素（也就是最后一个元素）的`next`指针指向想要添加到链表的节点。
 
 ```js
 const list = new LinkedList();
@@ -110,9 +115,9 @@ Node {
 
 ### 移除特定位置的元素
 
-从链表中移除元素要实现两种方法：第一种是从特定位置移除一个元素，第二种是根据元素的值移除。和`push`方法一样。
+从链表中移除元素要实现两种方法：第一种是从特定位置移除一个元素，第二种是根据元素的值移除（下面会说到）。
 
-从链表中移除元素也存在两种场景：第一种是移除第一个元素，第二种是移除第一个元素之外的其他元素。
+从链表中移除元素也存在两种情况：第一种是移除第一个元素，第二种是移除第一个元素之外的其他元素。
 
 下面是移除元素`removeAt`方法。
 
@@ -128,13 +133,14 @@ removeAt(index) {
       // 把第二个元素设置为第一个元素，就实现了删除第一个元素的效果
       this.head = current.next;
     } else {
-      // 上一个元素
+      // 当前元素的前一个元素的引用
       let prev = "";
       for (let i = 0; i < index; i++) {
         prev = current;
+        // 循环链表的当前元素的引用
         current = current.next;
       }
-      // 上一个元素和下一个元素连接起来
+      // 把prev和current的下一项链接起来。跳过current项，从而移除它
       prev.next = current.next;
     }
     this.count--;
@@ -144,15 +150,20 @@ removeAt(index) {
   return undefined;
 }
 
-console.log(list.removeAt(1)); // 15
+console.log(list.removeAt(0)); // 10
 ```
 
-首先验证`index`是否有效，从`0`到链表的长度（`count - 1`，因为`index`是从`0`开始）都是有效的位置。如果不是有效的位置则返回`undefined`。要移除第一个元素，就是让`head`指向链表中的第二个元素。这里用`current`变量创建一个对链表中第一个元素的引用。如果把`head`赋为`current.next`的值就移除了第一个元素。
+首先验证`index`是否有效，从`0`到链表的长度（`count - 1`，因为`index`是从`0`开始）都是有效的位置，如果不是有效的位置则返回`undefined`。要移除第一个元素，就是让`head`指向链表中的第二个元素，这里用`current`变量创建一个对链表中第一个元素的引用，如果把`head`赋为`current.next`的值就移除了第一个元素。下图展示删除第一个元素的过程。
 
-要移除链表最后一个或者中间某个元素。就需要迭代链表的节点，直到找到目标位置。这里需要注意的是，`current`变量总是对所循环链表的当前元素的引用，这里还有一个变量`prev`。在这个例子里面`current`的值就是`prev`变量里的`next`属性的值。在迭代到目标位置之后，`current`变量就是我们想要从链表中移除的节点。从链表中删除当前元素，就是把`prev.next`和`current.next`
-连接起来。
+<img src="./images/6/6-1-1-3.png"  />
+
+要移除链表最后一个或者中间某个元素。就需要迭代链表的节点，直到找到目标位置。这里需要注意的是，`current`变量总是对所循环链表的当前元素的引用。这里还有一个变量`prev`，这个变量就是对当前元素的前一个元素的引用。在迭代到目标位置之后，`current`变量就是我们想要从链表中移除的节点。从链表中删除当前元素，就是把`prev.next`和`current.next`连接起来。看下面的图你们就很好理解了。
+
+<img src="./images/6/6-1-1-4.png"  />
 
 对于最后一个元素，当跳出循环时，`current`变量就是链表最后一个节点的引用（要移除的节点）。`current.next`的值将`undefined`（因为它是最后一个节点）。由于还保留了对`prev`节点的引用（当前节点的前一个节点），`prev.next`就指向了`current`。要移除`current`，就是把`prev.next`的值改成`current.next`的值。
+
+<img src="./images/6/6-1-1-5.png"  />
 
 如果你理解了移除链表中的元素这个例子，后面获取元素和在任意位置插入元素方法就很好的理解。
 
@@ -179,7 +190,7 @@ console.log(list.getElementAt(2));
 
 上面的代码中，初始化一个`node`变量，从链表的第一个元素`head`开始迭代整个链表。然后，迭代整个链表直到目标`index`。结束循环时，`node`元素就是`index`位置元素的引用（`node`的值也就是当前`index`位置元素的`next`属性的值）。
 
-`removeAt`方法和`getElement`方法的部分逻辑相同，那么就可以改写一下`removeAt`方法。
+`removeAt`方法和`getElement`方法的部分逻辑相同，那就可以改写一下`removeAt`方法。
 
 ```js
 removeAt(index) {
@@ -226,12 +237,29 @@ insert(ele, index) {
 }
 ```
 
-首先，还是要检查`index`有效，和`removeAt`类似。如果位置是有效的，就要处理不同的场景。第一种场景是需要在链表的起点添加一个元素，也就是**第一个位置**。
+首先，还是要检查`index`有效，和`removeAt`类似。如果位置是有效的，就要处理不同的情况。
 
-`current`变量是链表中第一个元素的引用，我们就需要把`next.next`的值设为`current`（也就是链表的第一个元素）。然后再把`head`
-的引用改成`node`，这样链表中就有了一个新元素。
+- 第一种情况：需要在链表的起点添加一个元素，也就是**第一个位置**，看下面的图展示整个过程。
 
-现在看第二种场景：在链表中或尾部添加一个元素。首先，需要迭代链表，找到目标位置。这时候，我们会循环到`index - 1`的位置，也就是需要添加新节点位置的前一个位置。当循环结束后，`prev`就是想要插入新元素的位置前一个元素的引用，而`current`变量就是想要插入新元素的位置后一个元素的引用。在`prev`和`current`之间添加新元素。首先要把新元素和当前元素链接起来，然后需要改变`prev`和`current`之间的链接。还需要让`prev.next`指向`node`，取代`current`。
+<img src="./images/6/6-1-1-6.png"  />
+
+`current`变量是链表中第一个元素的引用，就需要把`node.next`的值设为`current`（也就是链表的第一个元素）。然后再把`head`的引用改成`node`，这样链表中就有了一个新元素。
+
+- 第二种情况：在链表中间或尾部添加一个元素。首先，需要迭代链表，找到目标位置。这时候，我们会循环到`index - 1`的位置，也就是需要添加新节点位置的前一个位置。
+
+当循环结束后，`prev`就是想要插入新元素的位置前一个元素的引用，而`current`变量就是想要插入新元素的位置后一个元素的引用。在`prev`和`current`之间添加新元素。首先要把新元素和当前元素链接起来，然后需要改变`prev`和`current`之间的链接。还需要让`prev.next`指向`node`，取代`current`。
+
+往链表末尾添加元素的过程。
+
+<img src="./images/6/6-1-1-7.png"  />
+
+往最后一个位置添加一个元素，`prev`就是链表最后一个元素的引用，`current`将是`undefined`。在这种情况下，`node.next`将指向`current`，而`prev.next`指向`node`，这样链表就有了一个新元素。
+
+往链表中间添加元素的过程。
+
+<img src="./images/6/6-1-1-8.png"  />
+
+在这种情况下，把新元素（`node`）插入`prev`和`current`元素之间。首先，需要把`node.next`的值指向`current`，然后把`prev.next`值的设置成`node`。这样就可以添加一个新元素了。
 
 ```js
 list.insert(20, 3);
@@ -331,21 +359,21 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function(a, b) {
+    this.equalsFn = function (a, b) {
       return a === b;
     };
   }
 
   push(ele) {
     const node = new Node(ele);
-    let current = '';
+    let current = "";
     if (this.head === undefined) {
       // node里面的next属性始终undefined
       this.head = node;
     } else {
       current = this.head;
       while (current.next !== undefined) {
-        // 设置current为下一个元素
+        // 设置current为下一个元素进行迭代
         current = current.next;
       }
       // current.next为undefined就表示到了链表的尾部，然后把最后一个元素的next属性设置为下一元素
@@ -362,7 +390,6 @@ class LinkedList {
         this.head = current.next;
       } else {
         const prev = this.getElementAt(index - 1);
-        console.log(prev);
         current = prev.next;
         prev.next = current.next;
       }
@@ -435,7 +462,7 @@ class LinkedList {
 
   toString() {
     if (this.head === undefined) {
-      return '';
+      return "";
     }
 
     let objString = this.head.element;
