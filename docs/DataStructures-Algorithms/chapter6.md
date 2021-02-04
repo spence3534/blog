@@ -538,3 +538,109 @@ console.log(list.indexOf(20)); // 2
 console.log(list.remove(11)); // 11
 console.log(list.toString()); // 15, 20
 ```
+
+## 双向链表
+
+双向链表和普通链表的区别在于，链表只是单向的链接。而在双向链表里，链接是双向的：第一个元素链向第二个元素，第二个元素又链向第一个元素，
+如下图。
+
+  <img src="./images/6/6-2-1.png" />
+
+可以看出，双向链表的每个元素都多出了一个指针（`prev`），指向上一个元素。
+
+### 创建双向链表
+
+下面就来实现双向链表的代码。
+
+```js
+class DoublyLinkedList extends LinkedList {
+  constructor(equalsFn) {
+    super(equalsFn);
+    this.tail = undefined; // 最后一个元素的引用
+  }
+}
+```
+
+由于双向链表是一种特殊的链表，这里就使用了`ES6`的`extends`关键字继承了`LinkedList`上的所有属性和方法，并且添加一个`tail`属性用于保存链表的最后一个元素的引用。
+
+```js
+class DoublyNode extends Node {
+  constructor(ele, next, prev) {
+    super(ele, next);
+    this.prev = prev; // 新增：前一个元素
+  }
+}
+```
+
+双向链表有两种迭代的方法：从头到尾或从尾到头。我们也可以访问一个特定节点的上一个或下一个元素。实现这种行为，需要追踪每个节点的前一个节点。所以除了`Node`类里的`element`和`next`属性，`DoubleLinkedList`会使用一个特殊的节点`DoublyNode`，该节点有一个`prev`属性。还是一样，`DoublyNode`继承`Node`上的所有属性。
+
+在单向链表里，如果迭代的时候错过了要找的元素，就需要回到起点，重新开始迭代。这是双向链表的优势。
+
+### 插入元素
+
+往双向链表中插入一个新元素和（单向）链表类似。区别就在于，链表只要控制一个`next`指针，而双向链表需要控制`next`和`prev`两个指针。在`DoublyLinkedList`类里，将重写`insert`方法。
+
+```js
+insert(ele, index) {
+  if (index >= 0 && index <= this.count) {
+    const node = new DoublyNode(ele);
+    let current = this.head;
+    // 情况1：插入第一个元素或从头部插入一个元素
+    if (index === 0) {
+      if (this.head === undefined) {
+        this.head = node;
+        this.tail = node;
+      } else {
+        // 插入的元素的next指针指向链表头部的元素
+        node.next = this.head;
+        // 当前元素的prev指针指向插入的元素
+        current.prev = node;
+        this.head = node;
+      }
+    } else if (index === this.count) { //情况2：在双链表尾部添加元素
+      // 获取双向链表尾部元素
+      current = this.tail;
+      // 设置末尾的元素指针指向插入的元素
+      current.next = node;
+      // 设置插入元素的prev指针指向当前元素
+      node.prev = current;
+      this.tail = node;
+    } else {  //情况3：在双链表中间插入元素
+      const prev = this.getElementAt(index - 1); // 上一个元素
+      // 当前元素
+      current = prev.next;
+      // 插入的元素指针指向当前元素
+      node.next = current;
+      // 当前元素的上一个元素的指针指向插入的元素
+      prev.next = node;
+      // 当前元素的prev指针指向插入的元素
+      current.prev = node;
+      // 插入的元素的prev指针指向上一个元素
+      node.prev = prev;
+    }
+    this.count++;
+    return true;
+  }
+  return false;
+}
+```
+
+上面的代码中，插入一个元素，有三种情况。
+
+1. 在双向链表的第一个位置插入一个元素。如果双向链表为空，只要把`head`和`tail`指向这个节点。如果不为空，`current`变量就是
+   双向链表里第一个元素。就和单向链表中的`insert`方法操作差不多，主要区别就在于需要给指向上一个元素的指针设一个值。`current.prev`
+   指针指向`undefined`变成指向新元素，`node.prev`指针已经是`undefined`，所以不需要做任何操作。下图展示整个操作的过程。
+
+  <img src="./images/6/6-2-2.png" />
+
+2. 如果要在双向链表最后添加一个元素。就需要控制指向最后一个元素的指针。`current`引用最后一个元素，然后建立链接，`current.next`
+   指针将指向`node`（而`node.next`已经指向了`undefined`）。`node.prev`引用`current`。最后更新`tail`，它指向`current`变成
+   指向`node`。下图展示整个操作的过程。
+
+  <img src="./images/6/6-2-3.png" />
+
+3. 在双向链表中间插入一个元素，就像之前的方法中所做的，迭代双链表，直到要找的位置。使用从`LinkedList`继承的`getElementAt`方法，
+   在`current`和`prev`之间插入元素。先把`node.next`指向`current`，而`prev.next`指向`node`，然后需要处理所有的链接：`current.prev`
+   指向`node`，而`node.prev`指向`prev`。下图展示整个操作的过程。
+
+  <img src="./images/6/6-2-4.png" />
