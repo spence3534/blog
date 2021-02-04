@@ -24,7 +24,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function (a, b) {
+    this.equalsFn = function(a, b) {
       return a === b;
     };
   }
@@ -359,7 +359,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function (a, b) {
+    this.equalsFn = function(a, b) {
       return a === b;
     };
   }
@@ -585,38 +585,31 @@ insert(ele, index) {
   if (index >= 0 && index <= this.count) {
     const node = new DoublyNode(ele);
     let current = this.head;
-    // 情况1：插入第一个元素或从头部插入一个元素
+    // 情况1
     if (index === 0) {
       if (this.head === undefined) {
+        // 新增
         this.head = node;
         this.tail = node;
       } else {
-        // 插入的元素的next指针指向链表头部的元素
         node.next = this.head;
-        // 当前元素的prev指针指向插入的元素
-        current.prev = node;
+        current.prev = node; // 新增
         this.head = node;
       }
-    } else if (index === this.count) { //情况2：在双链表尾部添加元素
-      // 获取双向链表尾部元素
+    } else if (index === this.count) {
+      //情况2
       current = this.tail;
-      // 设置末尾的元素指针指向插入的元素
       current.next = node;
-      // 设置插入元素的prev指针指向当前元素
       node.prev = current;
       this.tail = node;
-    } else {  //情况3：在双链表中间插入元素
-      const prev = this.getElementAt(index - 1); // 上一个元素
-      // 当前元素
+    } else {
+      //情况3
+      const prev = this.getElementAt(index - 1);
       current = prev.next;
-      // 插入的元素指针指向当前元素
       node.next = current;
-      // 当前元素的上一个元素的指针指向插入的元素
       prev.next = node;
-      // 当前元素的prev指针指向插入的元素
-      current.prev = node;
-      // 插入的元素的prev指针指向上一个元素
-      node.prev = prev;
+      current.prev = node; // 新增
+      node.prev = prev; // 新增
     }
     this.count++;
     return true;
@@ -639,8 +632,65 @@ insert(ele, index) {
 
   <img src="./images/6/6-2-3.png" />
 
-3. 在双向链表中间插入一个元素，就像之前的方法中所做的，迭代双链表，直到要找的位置。使用从`LinkedList`继承的`getElementAt`方法，
+3. 在双向链表中间插入一个元素，就跟之前的方法中所做的，迭代双链表，直到要找的位置。使用从`LinkedList`继承的`getElementAt`方法，
    在`current`和`prev`之间插入元素。先把`node.next`指向`current`，而`prev.next`指向`node`，然后需要处理所有的链接：`current.prev`
    指向`node`，而`node.prev`指向`prev`。下图展示整个操作的过程。
 
   <img src="./images/6/6-2-4.png" />
+
+### 在任何位置移除元素
+
+在双向链表中移除元素和链表类似。区别在于，需要设置前一个位置的指针。
+
+```js
+removeAt(index) {
+  if (index >= 0 && index < this.count) {
+    let current = this.head;
+
+    if (index === 0) {
+      // 把head改成当前元素的下一个元素
+      this.head = current.next;
+      if (this.count === 1) {
+        this.tail = undefined;
+      } else {
+        this.head.prev = undefined;
+      }
+    } else if (index === this.count - 1) {
+      current = this.tail;
+      // tail更新为倒数第二个元素
+      this.tail = current.prev;
+      this.tail.next = undefined;
+    } else {
+      // 当前元素
+      current = this.getElementAt(index - 1);
+      // 当前元素前面一个元素
+      const prev = current.prev;
+      // 当前元素前面一个元素指针指向当前元素的下一个元素，跳过当前元素
+      prev.next = current.next;
+      // 当前元素的prev指针指向前面一个元素
+      current.next.prev = prev;
+    }
+    this.count--;
+    return current.element;
+  }
+  return undefined;
+}
+```
+
+同样的，需要处理三种情况：从头部、中间和尾部移除一个元素。
+
+1. 移除第一个元素：`current`是双向链表中的第一个元素，也是要移除的元素。就需要改变`head`的引用，把`head`从`current`改成下一个元素。
+   还要更新`current.next`指向上一个元素的指针（第一个元素的`prev`指针是`undefined`）。因此，把`head.prev`的引用改成`undefined`。还
+   需要控制`tail`的引用，可以检查要移除的元素是否是第一个，是的话就把`tail`设置为`undefined`。下图展示操作过程。
+
+  <img src="./images/6/6-2-2-1.png" />
+
+2. 从最后一个位置移除元素：有了最后一个元素的引用（`tail`），就不需要迭代双向链表找到它。直接把`tail`赋给`current`变量。接下来，把`tail`
+   更新为双链表的倒数第二个元素。然后再把`next`指针更新为`undefined`。下图展示操作过程。
+
+  <img src="./images/6/6-2-2-2.png" />
+
+3. 从双向链表中间移除一个元素：首先需要迭代双向链表，直到该元素的位置。`current`变量就是要移除的元素。通过`prev.next`和`current.prev`
+   的引用，直接跳过它。`prev.next`指向`current.next`，而`current.next.prev`指向`prev`，如下图。
+
+  <img src="./images/6/6-2-2-3.png" />
