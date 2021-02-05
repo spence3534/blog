@@ -24,7 +24,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function(a, b) {
+    this.equalsFn = function (a, b) {
       return a === b;
     };
   }
@@ -359,7 +359,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function(a, b) {
+    this.equalsFn = function (a, b) {
       return a === b;
     };
   }
@@ -585,31 +585,38 @@ insert(ele, index) {
   if (index >= 0 && index <= this.count) {
     const node = new DoublyNode(ele);
     let current = this.head;
-    // 情况1
+    // 情况1：插入第一个元素或从头部插入一个元素
     if (index === 0) {
       if (this.head === undefined) {
-        // 新增
         this.head = node;
         this.tail = node;
       } else {
+        // 插入的元素的next指针指向链表头部的元素
         node.next = this.head;
-        current.prev = node; // 新增
+        // 当前元素的prev指针指向插入的元素
+        current.prev = node;
         this.head = node;
       }
-    } else if (index === this.count) {
-      //情况2
+    } else if (index === this.count) { //情况2：在双链表尾部添加元素
+      // 获取双向链表尾部元素
       current = this.tail;
+      // 设置末尾的元素指针指向插入的元素
       current.next = node;
+      // 设置插入元素的prev指针指向当前元素
       node.prev = current;
       this.tail = node;
-    } else {
-      //情况3
-      const prev = this.getElementAt(index - 1);
+    } else {  //情况3：在双链表中间插入元素
+      const prev = this.getElementAt(index - 1); // 上一个元素
+      // 当前元素
       current = prev.next;
+      // 插入的元素的下一个元素指针指向当前元素
       node.next = current;
+      // 当前元素的上一个元素的指针指向插入的元素
       prev.next = node;
-      current.prev = node; // 新增
-      node.prev = prev; // 新增
+      // 当前元素的prev指针指向插入的元素
+      current.prev = node;
+      // 插入元素的上一个元素的指针指向上一个元素
+      node.prev = prev;
     }
     this.count++;
     return true;
@@ -632,7 +639,7 @@ insert(ele, index) {
 
   <img src="./images/6/6-2-3.png" />
 
-3. 在双向链表中间插入一个元素，就跟之前的方法中所做的，迭代双链表，直到要找的位置。使用从`LinkedList`继承的`getElementAt`方法，
+3. 在双向链表中间插入一个元素，就像之前的方法中所做的，迭代双链表，直到要找的位置。使用从`LinkedList`继承的`getElementAt`方法，
    在`current`和`prev`之间插入元素。先把`node.next`指向`current`，而`prev.next`指向`node`，然后需要处理所有的链接：`current.prev`
    指向`node`，而`node.prev`指向`prev`。下图展示整个操作的过程。
 
@@ -694,3 +701,517 @@ removeAt(index) {
    的引用，直接跳过它。`prev.next`指向`current.next`，而`current.next.prev`指向`prev`，如下图。
 
   <img src="./images/6/6-2-2-3.png" />
+
+### 双向链表整体代码
+
+```js
+class DoublyNode extends Node {
+  constructor(ele, next, prev) {
+    super(ele, next);
+    this.prev = prev; // 新增：前一个元素
+  }
+}
+
+class DoublyLinkedList extends LinkedList {
+  constructor(equalsFn) {
+    super(equalsFn);
+    this.tail = undefined; // 最后一个元素的引用
+  }
+
+  push(ele) {
+    const node = new DoublyNode(ele);
+    if (this.head === undefined) {
+      this.head = node;
+      this.tail = node; // 新增
+    } else {
+      // 新添加
+      this.tail.next = node;
+      node.prev = this.tail;
+      this.tail = node;
+    }
+    this.count++;
+  }
+
+  insert(ele, index) {
+    if (index >= 0 && index <= this.count) {
+      const node = new DoublyNode(ele);
+      let current = this.head;
+      // 情况1：插入第一个元素或从头部插入一个元素
+      if (index === 0) {
+        if (this.head === undefined) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          // 插入的元素的next指针指向链表头部的元素
+          node.next = this.head;
+          // 当前元素的prev指针指向插入的元素
+          current.prev = node;
+          this.head = node;
+        }
+      } else if (index === this.count) {
+        //情况2：在双链表尾部添加元素
+        // 获取双向链表尾部元素
+        current = this.tail;
+        // 设置末尾的元素指针指向插入的元素
+        current.next = node;
+        // 设置插入元素的prev指针指向当前元素
+        node.prev = current;
+        this.tail = node;
+      } else {
+        //情况3：在双链表中间插入元素
+        const prev = this.getElementAt(index - 1); // 上一个元素
+        // 当前元素
+        current = prev.next;
+        // 插入的元素的下一个元素指针指向当前元素
+        node.next = current;
+        // 当前元素的上一个元素的指针指向插入的元素
+        prev.next = node;
+        // 当前元素的prev指针指向插入的元素
+        current.prev = node;
+        // 插入元素的上一个元素的指针指向上一个元素
+        node.prev = prev;
+      }
+      this.count++;
+      return true;
+    }
+    return false;
+  }
+
+  removeAt(index) {
+    if (index >= 0 && index < this.count) {
+      let current = this.head;
+
+      if (index === 0) {
+        // 把head改成当前元素的下一个元素
+        this.head = current.next;
+        if (this.count === 1) {
+          this.tail = undefined;
+        } else {
+          this.head.prev = undefined;
+        }
+      } else if (index === this.count - 1) {
+        current = this.tail;
+        // tail更新为倒数第二个元素~
+        this.tail = current.prev;
+        this.tail.next = undefined;
+      } else {
+        // 当前元素
+        current = this.getElementAt(index - 1);
+        // 当前元素前面一个元素
+        const prev = current.prev;
+        // 当前元素前面一个元素指针指向当前元素的下一个元素，跳过当前元素
+        prev.next = current.next;
+        // 当前元素的prev指针指向前面一个元素
+        current.next.prev = prev;
+      }
+      this.count--;
+      return current.element;
+    }
+    return undefined;
+  }
+
+  indexOf(ele) {
+    let current = this.head;
+    let index = 0;
+    while (current !== null) {
+      if (this.equalsFn(ele, current.element)) {
+        return index;
+      }
+
+      index++;
+      current = current.next;
+    }
+    return -1;
+  }
+
+  getTail() {
+    return this.tail;
+  }
+
+  clear() {
+    super.clear();
+    this.tail = undefined;
+  }
+
+  inverseToString() {
+    if (this.tail === null) {
+      return "";
+    }
+    let objString = `${this.tail.element}`;
+    let prev = this.tail.prev;
+    while (prev !== null) {
+      objString = `${objString}, ${prev.element}`;
+      prev = prev.prev;
+    }
+    return objString;
+  }
+}
+```
+
+## 循环链表
+
+**循环链表**是单双向链表的组合体。可单向引用，也可以双向引用。和链表之间的唯一区别就是，最后一个元素指向下一个元素的指针（`tail.next`）不是引用`undefined`，而是指向第一个元素`head`。如图所示。
+
+  <img src="./images/6/6-3-1.png" />
+
+双向循环链表的`tail.next`指向`head`，`head.prev`则指向`tail`。
+
+  <img src="./images/6/6-3-2.png" />
+
+### 创建循环链表
+
+```js
+class CircularLinkedList extends LinkedList {
+  constructor(equalsFn) {
+    super(equalsFn);
+  }
+}
+```
+
+`CircularLinkedList`类没有任何额外的属性，直接继承`LinkedList`类并且覆盖要改写的方法就行了。
+
+### 在任何位置插入元素
+
+向循环链表插入元素的逻辑跟向普通链表中插入元素的逻辑一样。不同之处就是把循环链表尾部节点的`next`指向头部节点。
+
+```js
+insert(ele, index) {
+  if (index >= 0 && index <= this.count) {
+    const node = new Node(ele);
+    let current = this.head;
+    if (index === 0) {
+      if (this.head === undefined) {
+        this.head = node;
+        // 插入元素的next指针指向头部元素（也就是指向了本身）
+        node.next = this.head;
+      } else {
+        node.next = current;
+        // 获取链表最后一个元素
+        current = this.getElementAt(this.size());
+        // 更新链表
+        this.head = node;
+        // 最后一个元素指针指向头部元素
+        current.next = this.head;
+      }
+    } else {
+      // 和单链表的insert没变
+      const prev = this.getElementAt(index - 1);
+      node.next = prev.next;
+      prev.next = node;
+    }
+    this.count++;
+    return true;
+  }
+  return false;
+}
+```
+
+来分析一样两种不同的场景。
+
+1. 要在循环链表第一个位置插入元素，如果循环链表为空，就把`head`属性赋值为`node`，并把最后一个元素链接到`head`。而
+   这个最后的元素也就是`node`。同时也是`head`。
+
+  <img src="./images/6/6-3-1-1.png" />
+
+2. 在一个非空循环链表的第一个位置插入元素，需要把`node.next`指向`head`（`current`变量）。然后用`getElementAt`方法，
+   传入循环链表的长度作为参数。将头部元素更新为新元素，再把最后一个节点（current）指向新的头部节点。
+
+  <img src="./images/6/6-3-1-2.png" />
+
+如果想在循环链表中间插入元素，代码和`LinkedList`一模一样，因为并没有对循环链表的第一个和最后一个节点做任何修改。
+
+### 从任意位置移除元素
+
+```js
+removeAt(index) {
+  if (index >= 0 && index <= this.count) {
+    let current = this.head;
+    if (index === 0) {
+      if (this.size() === 1) {
+        this.head = undefined;
+      } else {
+        const removed = this.head;
+        current = this.getElementAt(this.size());
+        this.head = this.head.next;
+        current.next = this.head;
+        // 改变current引用，因为后面return的时候要用到并且表示移除了元素的值。
+        current = removed;
+      }
+    } else {
+      // 不变
+      const prev = this.getElementAt(index - 1);
+      current = prev.next;
+      prev.next = current.next;
+    }
+    this.count--;
+    return current.element;
+  }
+  return undefined;
+}
+```
+
+从循环链表中移除元素，只要考虑第二种情况，也就是修改循环链表的`head`元素。
+
+1. 第一种情况是从只有一个元素的循环链表中移除元素，只需要把`head`赋值为`undefined`。
+2. 第二种情况是从一个非空循环链表中移除第一个元素。首先保存现在的`head`元素引用，将从循环链表中移除。接下来，获取
+   循环链表最后一个元素的引用，它被存储在`current`变量里。获取所有需要的节点引用之后，开始构建新的节点指向。首先，更新
+   `head`，把`head`指向第二个元素，然后再把最后一个元素指向`head`。最后更新`current`变量的引用，因为还要返回删除的
+   元素的值表示移除元素的值。
+
+  <img src="./images/6/6-3-1-3.png" />
+
+### 循环链表整体代码
+
+```js
+class CircularLinkedList extends LinkedList {
+  constructor(equalsFn) {
+    super(equalsFn);
+  }
+
+  push(ele) {
+    const node = new Node(ele);
+    let current = "";
+    if (this.head === undefined) {
+      this.head = node;
+    } else {
+      current = this.getElementAt(this.size() - 1);
+      current.next = node;
+    }
+    node.next = this.head;
+    this.count++;
+  }
+
+  insert(ele, index) {
+    if (index >= 0 && index <= this.count) {
+      const node = new Node(ele);
+      let current = this.head;
+      if (index === 0) {
+        if (this.head === undefined) {
+          this.head = node;
+          // 插入元素的next指针指向头部元素（也就是指向了本身）
+          node.next = this.head;
+        } else {
+          node.next = current;
+          // 获取循环链表最后一个元素
+          current = this.getElementAt(this.size());
+          // 更新链表
+          this.head = node;
+          // 最后一个元素指针指向头部元素
+          current.next = this.head;
+        }
+      } else {
+        const prev = this.getElementAt(index - 1);
+        node.next = prev.next;
+        prev.next = node;
+      }
+      this.count++;
+      return true;
+    }
+    return false;
+  }
+
+  removeAt(index) {
+    if (index >= 0 && index <= this.count) {
+      let current = this.head;
+      if (index === 0) {
+        if (this.size() === 1) {
+          this.head = undefined;
+        } else {
+          const removed = this.head;
+          current = this.getElementAt(this.size());
+          this.head = this.head.next;
+          current.next = this.head;
+          // 改变current引用，因为后面return的时候要用到并且表示移除了元素的值。
+          current = removed;
+        }
+      } else {
+        const prev = this.getElementAt(index - 1);
+        current = prev.next;
+        prev.next = current.next;
+      }
+      this.count--;
+      return current.element;
+    }
+    return undefined;
+  }
+}
+```
+
+## 有序链表
+
+有序链表指的是保持元素有序的链表结构。
+
+```js
+const Compare = {
+  LESS_THAN: -1,
+  BIGGER_THAN: 1,
+};
+
+class SortedLinkedList extends LinkedList {
+  constructor(equalsFn) {
+    super(equalsFn);
+    this.compareFn = function defaultCompare(a, b) {
+      if (a === b) {
+        return 0;
+      }
+      return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN;
+    };
+  }
+}
+```
+
+`SortedLinkedList`类继承了`LinkedList`类中的所有属性和方法，但是这个类比较特殊，需要用一个比较元素的`compareFn`函数。如果元素有相同的引用，就返回`0`。如果第一个元素小于第二个元素，就返回`-1`，否则返回`1`。
+
+### 有序插入元素
+
+```js
+insert(ele) {
+  if (this.isEmpty()) {
+    return super.insert(ele, 0);
+  }
+  const pos = this.getIndexNextSortedEle(ele);
+  return super.insert(ele, pos);
+}
+```
+
+这个`insert`方法里，没有`index`参数，因为插入元素的位置是内部控制的，并不想在任何位置插入元素。如果有序链表为空，直接调用`LinkedList`的`insert`方法并传入`0`作为`index`。如果有序链表不为空，就知道插入元素的正确位置并且调用`LinkedList`的`insert`方法，传入这个位置来保存链表的有序。
+
+```js
+getIndexNextSortedEle(ele) {
+  let current = this.head;
+  let i = 0;
+  for (; i < this.size() && current; i++) {
+    const comp = this.compareFn(ele, current.element);
+    if (comp === Compare.LESS_THAN) {
+      return i;
+    }
+    current = current.next;
+  }
+  return i;
+}
+```
+
+如果获取插入元素的正确位置，这里创建了一个`getIndexNextSortedEle`方法。在这个方法中，迭代整个有序链表一直找到要插入元素的位置或者迭代完所有的元素。在后者的场景中，返回的`index`是有序链表的长度（把元素插入链表的末尾）。然后使用`compareFn`来比较传入构造函数的元素。当要插入有序链表的元素小于`current`的元素时，就找到插入元素的位置。
+
+其他的方法和`LinkedList`是一样的。所以直接调用`LinkedList`里的方法即可。
+
+### 有序链表整体代码
+
+```js
+const Compare = {
+  LESS_THAN: -1,
+  BIGGER_THAN: 1,
+};
+
+class SortedLinkedList extends LinkedList {
+  constructor(equalsFn) {
+    super(equalsFn);
+    this.compareFn = function (a, b) {
+      if (a === b) {
+        return 0;
+      }
+      // 如果插入的元素小于当前元素，插入的元素就在当前元素的前面，所以返回-1
+      return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN;
+    };
+  }
+
+  push(ele) {
+    if (this.isEmpty()) {
+      super.push(ele);
+    } else {
+      const index = this.getIndexNextSortedEle(ele);
+      super.index(ele, index);
+    }
+  }
+
+  insert(ele) {
+    if (this.isEmpty()) {
+      return super.insert(ele, 0);
+    }
+    const pos = this.getIndexNextSortedEle(ele);
+    return super.insert(ele, pos);
+  }
+
+  getIndexNextSortedEle(ele) {
+    let current = this.head;
+    let i = 0;
+    for (; i < this.size() && current; i++) {
+      const comp = this.compareFn(ele, current.element);
+      if (comp === Compare.LESS_THAN) {
+        return i;
+      }
+      current = current.next;
+    }
+    return i;
+  }
+}
+```
+
+## 创建 StackLinkedList
+
+还可以用`LinkedList`类作为内部数据结构来创建其他数据结构。例如**栈、队列和双向队列**。
+
+```js
+class StackLinkedList {
+  constructor() {
+    this.items = new DoublyLinkedList();
+  }
+
+  push(ele) {
+    this.items.push(ele);
+  }
+
+  pop() {
+    if (this.isEmpty()) {
+      return undefined;
+    }
+    this.items.removeAt(this.size() - 1);
+  }
+}
+```
+
+对于`StackLinkedList`类，将使用双向链表来存储数据，而不是使用数组或对象。这里使用双链表而不是链表，是因为对栈来说，会从链表尾部添加元素，也会从链表尾部移除元素，双向链表有列表最后一个元素（`tail`）的引用，不需要迭代整个链表元素就能取到它。双向链表可以直接获取头尾的元素，减少过程的消耗。
+
+```js
+class StackLinkedList {
+  constructor() {
+    this.items = new DoublyLinkedList();
+  }
+
+  push(ele) {
+    this.items.push(ele);
+  }
+
+  pop() {
+    if (this.isEmpty()) {
+      return undefined;
+    }
+    this.items.removeAt(this.size() - 1);
+  }
+
+  peek() {
+    if (this.isEmpty()) {
+      return undefined;
+    }
+    return this.items.getElementAt(this.size() - 1).element;
+  }
+
+  isEmpty() {
+    return this.size() === 0;
+  }
+
+  size() {
+    return this.items.size();
+  }
+
+  clear() {
+    this.items.clear();
+  }
+
+  toString() {
+    this.items.toString();
+  }
+}
+```
+
+实现上只是调用`DoublyLinkedList`类里的方法。
