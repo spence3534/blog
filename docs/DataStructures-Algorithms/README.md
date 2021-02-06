@@ -5,4 +5,5 @@
 [数组](./chapter3.md)  
 [栈](./chapter4.md)  
 [队列](./chapter5.md)  
-[链表](./chapter6.md)
+[链表](./chapter6.md)  
+[集合](./chapter7.md)
