@@ -93,6 +93,7 @@ module.exports = {
             "chapter5",
             "chapter6",
             "chapter7",
+            "chapter8",
           ],
         },
       ],
