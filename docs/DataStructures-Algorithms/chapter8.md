@@ -251,7 +251,7 @@ toString() {
 
   const valuePairs = this.keyValues();
   let objString = `${valuePairs[0].toString()}`;
-  for (let i = 0; i < valuePairs.length; i++) {
+  for (let i = 1; i < valuePairs.length; i++) {
     objString = `${objString}, ${valuePairs[i].toString()}`;
   }
   return objString;
