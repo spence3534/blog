@@ -24,7 +24,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function (a, b) {
+    this.equalsFn = function(a, b) {
       return a === b;
     };
   }
@@ -359,7 +359,7 @@ class LinkedList {
     this.count = 0; // 存储链表元素数量
     this.head = undefined; // 第一个元素的引用
     // 比较链表中的元素是否相等
-    this.equalsFn = function (a, b) {
+    this.equalsFn = function(a, b) {
       return a === b;
     };
   }
@@ -1106,7 +1106,7 @@ const Compare = {
 class SortedLinkedList extends LinkedList {
   constructor(equalsFn) {
     super(equalsFn);
-    this.compareFn = function (a, b) {
+    this.compareFn = function(a, b) {
       if (a === b) {
         return 0;
       }
