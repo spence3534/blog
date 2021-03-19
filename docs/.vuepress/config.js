@@ -30,6 +30,10 @@ module.exports = {
         text: "数据结构与算法",
         link: "/DataStructures-Algorithms/",
       },
+      {
+        text: "HTTP",
+        link: "/http/",
+      },
     ],
     sidebarDepth: 4,
     sidebar: {
@@ -96,6 +100,13 @@ module.exports = {
             "chapter8",
             "chapter9",
           ],
+        },
+      ],
+      "/http/": [
+        {
+          title: "HTTP",
+          collapsable: false,
+          children: ["chapter1"],
         },
       ],
       sidebarDepth: 3,
