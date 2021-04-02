@@ -194,7 +194,9 @@ values() {
 }
 ```
 
-#### 用`forEach`迭代字典中的每个键值对
+### forEach 方法
+
+用`forEach`迭代字典中的每个键值对。
 
 ```js
 forEach(callbackFn) {
